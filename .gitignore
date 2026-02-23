@@ -37,3 +37,13 @@ Thumbs.db
 # Capacitor generated web assets
 ios/App/App/public/
 android/app/src/main/assets/public/
+
+# Capacitor generated config artifacts
+ios/App/App/capacitor.config.json
+ios/App/App/capacitor.plugins.json
+android/app/src/main/assets/capacitor.config.json
+android/app/src/main/assets/capacitor.plugins.json
+android/app/src/main/res/xml/config.xml
+
+# Android local SDK/JDK settings
+android/local.properties

@@ -22,6 +22,8 @@ import { SceneCanvas, type SceneTriggerPayload } from '../features/scene/SceneCa
 import { ControlPanel } from '../features/ui/ControlPanel';
 import { SettingsDrawer } from '../features/ui/SettingsDrawer';
 import { SoundPalette } from '../features/ui/SoundPalette';
+import { lockLandscapeWhenNative } from '../platform/orientation';
+import { resolveRuntimePlatform, type RuntimePlatform } from '../platform/runtime';
 
 /**
  * サウンドがタッチ操作で再生可能かを返する。
@@ -121,6 +123,30 @@ function toUserSoundDefinition(asset: UserSoundAsset, audioBuffer: AudioBuffer):
 }
 
 /**
+ * ランタイム種別をUI表示向けの短いラベルへ変換する。
+ *
+ * @param {RuntimePlatform} platform 実行中のランタイム種別。
+ * @returns {string} UI表示向けのプラットフォーム名。
+ * @throws {Error} 通常運用ではこの関数は例外をスローしない。
+ * @example
+ * ```ts
+ * const label = toPlatformLabel('android');
+ * ```
+ */
+function toPlatformLabel(platform: RuntimePlatform): string {
+  switch (platform) {
+    case 'android':
+      return 'Android';
+    case 'ios':
+      return 'iOS';
+    case 'web':
+      return 'Web';
+    default:
+      return 'Unknown';
+  }
+}
+
+/**
  * Phase2 ASMRプロトタイプのメインアプリシェル。
  *
  * @returns {JSX.Element} アプリケーションのルート表示。
@@ -134,6 +160,7 @@ export function App(): ReactElement {
   const spatialAudioEngine = useMemo(() => new SpatialAudioEngine(), []);
   const recorder = useMemo(() => new Recorder(), []);
   const exportManager = useMemo(() => new ExportManager(), []);
+  const runtimePlatform = useMemo(() => resolveRuntimePlatform(), []);
 
   const [soundDefinitions, setSoundDefinitions] = useState<SoundDefinition[]>(SOUND_DEFINITIONS);
   const [selectedCategory, setSelectedCategory] = useState<SoundCategory>('whisper');
@@ -185,6 +212,10 @@ export function App(): ReactElement {
       spatialAudioEngine.dispose();
     };
   }, [recorder, spatialAudioEngine]);
+
+  useEffect(() => {
+    void lockLandscapeWhenNative();
+  }, []);
 
   /**
    * 永続化済みユーザー音源を読み込み、サウンドバンクへ追加する。
@@ -513,7 +544,7 @@ export function App(): ReactElement {
 
       <header className="app-header">
         <h1>ASMR Tingles</h1>
-        <p>Web Prototype / Phase2</p>
+        <p>Web + Android / Runtime: {toPlatformLabel(runtimePlatform)}</p>
       </header>
 
       <div className="workspace-grid">
