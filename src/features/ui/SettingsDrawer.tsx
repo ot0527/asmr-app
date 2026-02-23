@@ -1,7 +1,7 @@
 import type { ReactElement } from 'react';
 
 /**
- * Props for the settings drawer component.
+ * 設定ドロワーコンポーネントのProps。
  */
 export interface SettingsDrawerProps {
   isOpen: boolean;
@@ -9,11 +9,11 @@ export interface SettingsDrawerProps {
 }
 
 /**
- * Renders a lightweight settings drawer for Phase2.
+ * Phase2向けの軽量設定ドロワーを描画する。
  *
- * @param {SettingsDrawerProps} props Drawer state and close callback.
- * @returns {JSX.Element} Settings drawer view.
- * @throws {Error} This component does not throw under normal operation.
+ * @param {SettingsDrawerProps} props ドロワーの状態とクローズ用コールバック。
+ * @returns {JSX.Element} 設定ドロワー表示。
+ * @throws {Error} 通常運用ではこのコンポーネントは例外をスローしない。
  * @example
  * ```tsx
  * <SettingsDrawer isOpen={open} onClose={() => setOpen(false)} />

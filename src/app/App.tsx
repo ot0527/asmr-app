@@ -24,11 +24,11 @@ import { SettingsDrawer } from '../features/ui/SettingsDrawer';
 import { SoundPalette } from '../features/ui/SoundPalette';
 
 /**
- * Returns whether one sound can be triggered by touch interactions.
+ * サウンドがタッチ操作で再生可能かを返する。
  *
- * @param {SoundDefinition} sound Sound definition.
- * @returns {boolean} True when the sound is not background-only.
- * @throws {Error} This function does not throw under normal operation.
+ * @param {SoundDefinition} sound サウンド定義。
+ * @returns {boolean} 背景専用サウンドでない場合はtrue。
+ * @throws {Error} 通常運用ではこの関数は例外をスローしない。
  * @example
  * ```ts
  * const interactive = isInteractionSound(sound);
@@ -39,11 +39,11 @@ function isInteractionSound(sound: SoundDefinition): boolean {
 }
 
 /**
- * Converts interaction gesture into playback intensity.
+ * 操作ジェスチャーを再生強度へ変換する。
  *
- * @param {GestureType} gesture Current interaction gesture.
- * @returns {number} Linear intensity multiplier.
- * @throws {Error} This function does not throw under normal operation.
+ * @param {GestureType} gesture 現在の操作ジェスチャー。
+ * @returns {number} 線形の強度倍率。
+ * @throws {Error} 通常運用ではこの関数は例外をスローしない。
  * @example
  * ```ts
  * const intensity = gestureToIntensity('drag');
@@ -54,10 +54,10 @@ function gestureToIntensity(gesture: GestureType): number {
 }
 
 /**
- * Builds a display name for newly recorded user audio.
+ * 新規録音したユーザー音源の表示名を生成する。
  *
- * @returns {string} Generated recording name.
- * @throws {Error} This function does not throw under normal operation.
+ * @returns {string} 生成した録音名。
+ * @throws {Error} 通常運用ではこの関数は例外をスローしない。
  * @example
  * ```ts
  * const name = toRecordingName();
@@ -70,12 +70,12 @@ function toRecordingName(): string {
 }
 
 /**
- * Merges one user sound definition into an existing list.
+ * ユーザーサウンド定義を既存一覧へマージする。
  *
- * @param {SoundDefinition[]} definitions Current sound definitions.
- * @param {SoundDefinition} definition Incoming sound definition.
- * @returns {SoundDefinition[]} Updated sound list.
- * @throws {Error} This function does not throw under normal operation.
+ * @param {SoundDefinition[]} definitions 現在のサウンド定義一覧。
+ * @param {SoundDefinition} definition 追加対象のサウンド定義。
+ * @returns {SoundDefinition[]} 更新後のサウンド一覧。
+ * @throws {Error} 通常運用ではこの関数は例外をスローしない。
  * @example
  * ```ts
  * const merged = mergeSoundDefinition(definitions, definition);
@@ -90,12 +90,12 @@ function mergeSoundDefinition(
 }
 
 /**
- * Builds a runtime sound definition from one user sound asset.
+ * 1つのユーザー音源アセットから実行時サウンド定義を構築する。
  *
- * @param {UserSoundAsset} asset Stored user sound asset.
- * @param {AudioBuffer} audioBuffer Decoded audio buffer.
- * @returns {SoundDefinition} Sound definition used by the app.
- * @throws {Error} This function does not throw under normal operation.
+ * @param {UserSoundAsset} asset 保存済みのユーザー音源アセット。
+ * @param {AudioBuffer} audioBuffer デコード済みのAudioBuffer。
+ * @returns {SoundDefinition} アプリで使用するサウンド定義。
+ * @throws {Error} 通常運用ではこの関数は例外をスローしない。
  * @example
  * ```ts
  * const definition = toUserSoundDefinition(asset, buffer);
@@ -121,10 +121,10 @@ function toUserSoundDefinition(asset: UserSoundAsset, audioBuffer: AudioBuffer):
 }
 
 /**
- * Main app shell for the Phase2 ASMR prototype.
+ * Phase2 ASMRプロトタイプのメインアプリシェル。
  *
- * @returns {JSX.Element} Root application view.
- * @throws {Error} Throws when no interaction sound definitions exist.
+ * @returns {JSX.Element} アプリケーションのルート表示。
+ * @throws {Error} 操作用サウンド定義が存在しない場合にスローする。
  * @example
  * ```tsx
  * <App />
@@ -187,10 +187,10 @@ export function App(): ReactElement {
   }, [recorder, spatialAudioEngine]);
 
   /**
-   * Loads persisted user sounds and appends them to the sound bank.
+   * 永続化済みユーザー音源を読み込み、サウンドバンクへ追加する。
    *
-   * @returns {Promise<void>} Resolves when loading is complete.
-   * @throws {Error} Throws when IndexedDB or audio decoding fails.
+   * @returns {Promise<void>} 読み込み完了時に解決する。
+   * @throws {Error} IndexedDBまたは音声デコードに失敗した場合にスローする。
    * @example
    * ```ts
    * await loadUserSounds();
@@ -221,10 +221,10 @@ export function App(): ReactElement {
     let isActive = true;
 
     /**
-     * Executes asynchronous user sound loading with mounted checks.
+     * マウント状態を確認しながらユーザー音源の非同期読み込みを実行する。
      *
-     * @returns {Promise<void>} Resolves after attempting load.
-     * @throws {Error} Throws when load logic raises an unexpected error.
+     * @returns {Promise<void>} 読み込み試行後に解決する。
+     * @throws {Error} 読み込み処理で予期しないエラーが発生した場合にスローする。
      * @example
      * ```ts
      * await bootstrapUserSounds();
@@ -295,10 +295,10 @@ export function App(): ReactElement {
   }, [categorySounds, selectedSoundId, soundBank]);
 
   /**
-   * Handles explicit user activation of the audio context.
+   * ユーザー明示操作によるAudioContext有効化を処理する。
    *
-   * @returns {Promise<void>} Resolves when audio is ready.
-   * @throws {Error} Throws when browser blocks audio context creation.
+   * @returns {Promise<void>} 音声準備完了時に解決する。
+   * @throws {Error} ブラウザがAudioContext生成をブロックした場合にスローする。
    * @example
    * ```ts
    * await handleEnableAudio();
@@ -311,11 +311,11 @@ export function App(): ReactElement {
   }, [masterGain, spatialAudioEngine]);
 
   /**
-   * Converts scene trigger payload to a playback request and plays it.
+   * シーントリガーペイロードを再生リクエストに変換して再生する。
    *
-   * @param {SceneTriggerPayload} payload Trigger payload from the 3D scene.
-   * @returns {Promise<void>} Resolves after scheduling playback.
-   * @throws {Error} Throws when the audio engine fails to initialize.
+   * @param {SceneTriggerPayload} payload 3Dシーンからのトリガーペイロード。
+   * @returns {Promise<void>} 再生スケジューリング後に解決する。
+   * @throws {Error} 音響エンジンの初期化に失敗した場合にスローする。
    * @example
    * ```ts
    * await playInteractionSound(payload);
@@ -355,11 +355,11 @@ export function App(): ReactElement {
   );
 
   /**
-   * Handles scene trigger payloads and forwards them to audio playback.
+   * シーントリガーペイロードを処理して音声再生へ渡する。
    *
-   * @param {SceneTriggerPayload} payload Trigger payload from scene interaction.
-   * @returns {void} This callback does not return a value.
-   * @throws {Error} This callback does not throw under normal operation.
+   * @param {SceneTriggerPayload} payload シーン操作で生成されたトリガーペイロード。
+   * @returns {void} このコールバックは値を返しない。
+   * @throws {Error} 通常運用ではこのコールバックは例外をスローしない。
    * @example
    * ```ts
    * handleSceneTrigger(payload);
@@ -374,10 +374,10 @@ export function App(): ReactElement {
   );
 
   /**
-   * Handles stroke-end events from pointer interactions.
+   * ポインター操作由来のストローク終了イベントを処理する。
    *
-   * @returns {void} This callback does not return a value.
-   * @throws {Error} This callback does not throw under normal operation.
+   * @returns {void} このコールバックは値を返しない。
+   * @throws {Error} 通常運用ではこのコールバックは例外をスローしない。
    * @example
    * ```ts
    * handleStrokeEnd();
@@ -388,10 +388,10 @@ export function App(): ReactElement {
   }, [spatialAudioEngine]);
 
   /**
-   * Starts a MediaRecorder session and begins level metering.
+   * MediaRecorderセッションを開始し、レベル計測を開始する。
    *
-   * @returns {Promise<void>} Resolves when recording starts.
-   * @throws {Error} Throws when recording cannot start.
+   * @returns {Promise<void>} 録音開始時に解決する。
+   * @throws {Error} 録音を開始できない場合にスローする。
    * @example
    * ```ts
    * await handleStartRecording();
@@ -411,10 +411,10 @@ export function App(): ReactElement {
   }, [recorder]);
 
   /**
-   * Stops recording, stores the sound, and adds it to the palette.
+   * 録音を停止し、音源を保存してパレットへ追加する。
    *
-   * @returns {Promise<void>} Resolves when storage is complete.
-   * @throws {Error} Throws when recording stop or storage fails.
+   * @returns {Promise<void>} 保存完了時に解決する。
+   * @throws {Error} 録音停止または保存に失敗した場合にスローする。
    * @example
    * ```ts
    * await handleStopRecording();
@@ -448,11 +448,11 @@ export function App(): ReactElement {
   }, [exportManager, recorder]);
 
   /**
-   * Imports one user-selected audio file and stores it as a user sound.
+   * ユーザー選択の音声ファイルを1件取り込み、ユーザー音源として保存する。
    *
-   * @param {File} file Imported file.
-   * @returns {Promise<void>} Resolves when import and decode complete.
-   * @throws {Error} Throws when storage or decoding fails.
+   * @param {File} file インポート対象のファイル。
+   * @returns {Promise<void>} インポートとデコードの完了時に解決する。
+   * @throws {Error} 保存またはデコードに失敗した場合にスローする。
    * @example
    * ```ts
    * await handleImportFile(file);
@@ -485,11 +485,11 @@ export function App(): ReactElement {
   );
 
   /**
-   * Deletes one persisted user sound and removes it from runtime state.
+   * 永続化済みユーザー音源を1件削除し、実行時状態から除去する。
    *
-   * @param {string} assetId Target asset id.
-   * @returns {Promise<void>} Resolves when deletion completes.
-   * @throws {Error} Throws when IndexedDB deletion fails.
+   * @param {string} assetId 対象アセットID。
+   * @returns {Promise<void>} 削除完了時に解決する。
+   * @throws {Error} IndexedDBの削除処理に失敗した場合にスローする。
    * @example
    * ```ts
    * await handleDeleteAsset(assetId);

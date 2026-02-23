@@ -16,7 +16,7 @@ interface ActiveBgmSession {
 }
 
 /**
- * HRTF-based audio engine that spatializes ASMR sounds in 3D.
+ * ASMRサウンドを3D空間化するHRTFベース音響エンジン。
  */
 export class SpatialAudioEngine {
   private audioContext: AudioContext | null = null;
@@ -27,10 +27,10 @@ export class SpatialAudioEngine {
   private activeBgmSession: ActiveBgmSession | null = null;
 
   /**
-   * Creates a new spatial engine instance.
+   * 新しい空間音響エンジンインスタンスを作成する。
    *
-   * @returns {void} This constructor does not return a value.
-   * @throws {Error} This constructor does not throw under normal operation.
+   * @returns {void} このコンストラクターは値を返しない。
+   * @throws {Error} 通常運用ではこのコンストラクターは例外をスローしない。
    * @example
    * ```ts
    * const engine = new SpatialAudioEngine();
@@ -42,10 +42,10 @@ export class SpatialAudioEngine {
   }
 
   /**
-   * Ensures the AudioContext exists and is running.
+   * AudioContextが存在し実行中であることを保証する。
    *
-   * @returns {Promise<void>} Resolves when audio playback is available.
-   * @throws {Error} Throws when the browser does not support Web Audio API.
+   * @returns {Promise<void>} 音声再生が利用可能になった時点で解決する。
+   * @throws {Error} ブラウザがWeb Audio APIをサポートしていない場合にスローする。
    * @example
    * ```ts
    * await engine.resumeContext();
@@ -60,10 +60,10 @@ export class SpatialAudioEngine {
   }
 
   /**
-   * Checks whether the engine has an active running context.
+   * エンジンが有効な実行中コンテキストを持つか確認する。
    *
-   * @returns {boolean} True when context is running, otherwise false.
-   * @throws {Error} This method does not throw under normal operation.
+   * @returns {boolean} コンテキスト実行中はtrue、それ以外はfalse。
+   * @throws {Error} 通常運用ではこのメソッドは例外をスローしない。
    * @example
    * ```ts
    * const ready = engine.isReady();
@@ -74,11 +74,11 @@ export class SpatialAudioEngine {
   }
 
   /**
-   * Updates the global output gain for all sounds.
+   * 全サウンドのグローバル出力ゲインを更新する。
    *
-   * @param {number} gainValue Target gain from 0.0 to 1.5.
-   * @returns {void} This method does not return a value.
-   * @throws {Error} Throws when the audio context is not initialized.
+   * @param {number} gainValue 目標ゲイン（0.0〜1.5）。
+   * @returns {void} このメソッドは値を返しない。
+   * @throws {Error} AudioContextが未初期化の場合にスローする。
    * @example
    * ```ts
    * engine.setMasterGain(0.8);
@@ -90,11 +90,11 @@ export class SpatialAudioEngine {
   }
 
   /**
-   * Plays one spatialized ASMR sound as a one-shot event.
+   * 空間化したASMRサウンドをワンショットで再生する。
    *
-   * @param {PlaybackRequest} request Playback request including sound and position.
-   * @returns {void} This method does not return a value.
-   * @throws {Error} Throws when audio context initialization fails.
+   * @param {PlaybackRequest} request サウンドと位置を含む再生リクエスト。
+   * @returns {void} このメソッドは値を返しない。
+   * @throws {Error} AudioContextの初期化に失敗した場合にスローする。
    * @example
    * ```ts
    * engine.play({ sound, position: { x: -0.8, y: 0, z: 0.1 }, intensity: 1, gesture: 'tap', strokeSpeed: 0 });
@@ -139,11 +139,11 @@ export class SpatialAudioEngine {
   }
 
   /**
-   * Updates the active stroke playback and spatial position.
+   * 有効なストローク再生と空間位置を更新する。
    *
-   * @param {PlaybackRequest} request Playback request with drag metrics.
-   * @returns {void} This method does not return a value.
-   * @throws {Error} Throws when audio context initialization fails.
+   * @param {PlaybackRequest} request ドラッグ計測値を含む再生リクエスト。
+   * @returns {void} このメソッドは値を返しない。
+   * @throws {Error} AudioContextの初期化に失敗した場合にスローする。
    * @example
    * ```ts
    * engine.updateStroke({ sound, position, intensity: 0.8, gesture: 'drag', strokeSpeed: 420 });
@@ -170,10 +170,10 @@ export class SpatialAudioEngine {
   }
 
   /**
-   * Gracefully fades out and stops the active stroke session.
+   * 有効なストロークセッションを自然にフェードアウトして停止する。
    *
-   * @returns {void} This method does not return a value.
-   * @throws {Error} This method does not throw under normal operation.
+   * @returns {void} このメソッドは値を返しない。
+   * @throws {Error} 通常運用ではこのメソッドは例外をスローしない。
    * @example
    * ```ts
    * engine.endStroke();
@@ -199,12 +199,12 @@ export class SpatialAudioEngine {
   }
 
   /**
-   * Starts or updates ambient background playback.
+   * 環境音の背景再生を開始または更新する。
    *
-   * @param {SoundDefinition | null} sound Ambient sound or null to stop.
-   * @param {number} gainValue Target ambient gain value.
-   * @returns {void} This method does not return a value.
-   * @throws {Error} Throws when audio context initialization fails.
+   * @param {SoundDefinition | null} sound 環境音のサウンド定義。停止する場合はnull。
+   * @param {number} gainValue 目標の環境音ゲイン値。
+   * @returns {void} このメソッドは値を返しない。
+   * @throws {Error} AudioContextの初期化に失敗した場合にスローする。
    * @example
    * ```ts
    * engine.setAmbientTrack(ambientSound, 0.3);
@@ -260,10 +260,10 @@ export class SpatialAudioEngine {
   }
 
   /**
-   * Stops ambient background playback.
+   * 環境音の背景再生を停止する。
    *
-   * @returns {void} This method does not return a value.
-   * @throws {Error} This method does not throw under normal operation.
+   * @returns {void} このメソッドは値を返しない。
+   * @throws {Error} 通常運用ではこのメソッドは例外をスローしない。
    * @example
    * ```ts
    * engine.stopAmbientTrack();
@@ -288,10 +288,10 @@ export class SpatialAudioEngine {
   }
 
   /**
-   * Releases audio resources owned by this engine.
+   * このエンジンが保持する音響リソースを解放する。
    *
-   * @returns {void} This method does not return a value.
-   * @throws {Error} This method does not throw under normal operation.
+   * @returns {void} このメソッドは値を返しない。
+   * @throws {Error} 通常運用ではこのメソッドは例外をスローしない。
    * @example
    * ```ts
    * engine.dispose();
@@ -312,12 +312,12 @@ export class SpatialAudioEngine {
   }
 
   /**
-   * Ensures one stroke session exists for the active sound.
+   * アクティブサウンド用のストロークセッションが存在することを保証する。
    *
-   * @param {AudioContext} context Active audio context.
-   * @param {SoundDefinition} sound Sound used for stroke playback.
-   * @returns {ActiveStrokeSession} Active stroke session.
-   * @throws {Error} Throws when audio buffer creation fails.
+   * @param {AudioContext} context 現在有効なAudioContext。
+   * @param {SoundDefinition} sound ストローク再生に使うサウンド。
+   * @returns {ActiveStrokeSession} 有効なストロークセッション。
+   * @throws {Error} AudioBufferの作成に失敗した場合にスローする。
    * @example
    * ```ts
    * const session = engine['getOrCreateStrokeSession'](audioContext, sound);
@@ -361,14 +361,14 @@ export class SpatialAudioEngine {
   }
 
   /**
-   * Applies panner coordinates with smoothing.
+   * スムージングを適用してpanner座標を反映する。
    *
-   * @param {PannerNode} pannerNode Target panner node.
-   * @param {{ x: number; y: number; z: number }} position Requested audio-space position.
-   * @param {number} currentTime Audio context current time.
-   * @param {number} smoothingTime Smoothing time constant in seconds.
-   * @returns {void} This method does not return a value.
-   * @throws {Error} This method does not throw under normal operation.
+   * @param {PannerNode} pannerNode 対象のPannerNode。
+   * @param {{ x: number; y: number; z: number }} position 要求する音響空間座標。
+   * @param {number} currentTime AudioContextの現在時刻。
+   * @param {number} smoothingTime スムージング時定数（秒）。
+   * @returns {void} このメソッドは値を返しない。
+   * @throws {Error} 通常運用ではこのメソッドは例外をスローしない。
    * @example
    * ```ts
    * engine['applyPannerValues'](pannerNode, { x: 0.4, y: 0, z: -0.2 }, context.currentTime, 0.03);
@@ -391,11 +391,11 @@ export class SpatialAudioEngine {
   }
 
   /**
-   * Computes smoothing for stroke position updates from pointer speed.
+   * ポインター速度からストローク位置更新のスムージング値を計算する。
    *
-   * @param {number} strokeSpeed Pointer speed in pixels per second.
-   * @returns {number} Time constant for `setTargetAtTime`.
-   * @throws {Error} This method does not throw under normal operation.
+   * @param {number} strokeSpeed ポインター速度（ピクセル/秒）。
+   * @returns {number} `setTargetAtTime` に渡す時定数。
+   * @throws {Error} 通常運用ではこのメソッドは例外をスローしない。
    * @example
    * ```ts
    * const smoothing = engine['computePositionSmoothing'](420);
@@ -407,10 +407,10 @@ export class SpatialAudioEngine {
   }
 
   /**
-   * Ensures the master chain exists and returns its node.
+   * マスターチェーンの存在を保証し、そのノードを返する。
    *
-   * @returns {GainNode} Ready-to-use master gain node.
-   * @throws {Error} Throws when audio context initialization fails.
+   * @returns {GainNode} そのまま利用できるマスターGainNode。
+   * @throws {Error} AudioContextの初期化に失敗した場合にスローする。
    * @example
    * ```ts
    * const master = engine['ensureMixerReady']();
@@ -427,10 +427,10 @@ export class SpatialAudioEngine {
   }
 
   /**
-   * Creates the AudioContext on first use.
+   * 初回利用時にAudioContextを作成する。
    *
-   * @returns {AudioContext} Active audio context.
-   * @throws {Error} Throws when Web Audio API is unavailable.
+   * @returns {AudioContext} 現在有効なAudioContext。
+   * @throws {Error} Web Audio APIが利用できない場合にスローする。
    * @example
    * ```ts
    * const context = engine['getOrCreateContext']();
@@ -454,11 +454,11 @@ export class SpatialAudioEngine {
   }
 
   /**
-   * Starts/resumes context in autoplay-restricted environments.
+   * 自動再生制限環境でコンテキストを開始/再開する。
    *
-   * @param {AudioContext} context Active audio context.
-   * @returns {void} This method does not return a value.
-   * @throws {Error} This method does not throw under normal operation.
+   * @param {AudioContext} context 現在有効なAudioContext。
+   * @returns {void} このメソッドは値を返しない。
+   * @throws {Error} 通常運用ではこのメソッドは例外をスローしない。
    * @example
    * ```ts
    * engine['ensureContextRunning'](audioContext);
@@ -471,12 +471,12 @@ export class SpatialAudioEngine {
   }
 
   /**
-   * Returns a cached buffer or synthesizes/uses a custom one.
+   * キャッシュ済みバッファを返すか、必要に応じて合成/カスタムバッファを使用する。
    *
-   * @param {AudioContext} context Active audio context.
-   * @param {SoundDefinition} sound Sound definition to render.
-   * @returns {AudioBuffer} Decoded/generated audio buffer.
-   * @throws {Error} Throws when buffer rendering fails.
+   * @param {AudioContext} context 現在有効なAudioContext。
+   * @param {SoundDefinition} sound 描画対象のサウンド定義。
+   * @returns {AudioBuffer} デコードまたは生成したAudioBuffer。
+   * @throws {Error} バッファレンダリングに失敗した場合にスローする。
    * @example
    * ```ts
    * const buffer = engine['getOrCreateBuffer'](audioContext, sound);
@@ -500,12 +500,12 @@ export class SpatialAudioEngine {
   }
 
   /**
-   * Synthesizes a pseudo-ASMR buffer by category.
+   * カテゴリ別に疑似ASMRバッファを合成する。
    *
-   * @param {AudioContext} context Active audio context.
-   * @param {SoundDefinition} sound Sound configuration.
-   * @returns {AudioBuffer} Synthesized mono buffer.
-   * @throws {Error} Throws when an unsupported category is passed.
+   * @param {AudioContext} context 現在有効なAudioContext。
+   * @param {SoundDefinition} sound サウンド設定。
+   * @returns {AudioBuffer} 合成したモノラルバッファ。
+   * @throws {Error} 未対応カテゴリが渡された場合にスローする。
    * @example
    * ```ts
    * const buffer = engine['renderSynthBuffer'](audioContext, sound);
@@ -535,13 +535,13 @@ export class SpatialAudioEngine {
   }
 
   /**
-   * Generates a whisper-like soft broadband noise.
+   * ささやき風の柔らかい広帯域ノイズを生成する。
    *
-   * @param {AudioContext} context Active audio context.
-   * @param {number} durationSeconds Buffer duration in seconds.
-   * @param {number} seed Seed for deterministic randomness.
-   * @returns {AudioBuffer} Generated whisper buffer.
-   * @throws {Error} Throws when invalid durations are passed.
+   * @param {AudioContext} context 現在有効なAudioContext。
+   * @param {number} durationSeconds バッファ長（秒）。
+   * @param {number} seed 決定的乱数に使うシード。
+   * @returns {AudioBuffer} 生成したささやき用バッファ。
+   * @throws {Error} 不正なdurationが渡された場合にスローする。
    * @example
    * ```ts
    * const whisper = engine['renderWhisperBuffer'](audioContext, 1.8, 11);
@@ -568,13 +568,13 @@ export class SpatialAudioEngine {
   }
 
   /**
-   * Generates a short transient tapping sound.
+   * 短いトランジェントのタッピング音を生成する。
    *
-   * @param {AudioContext} context Active audio context.
-   * @param {number} durationSeconds Buffer duration in seconds.
-   * @param {number} seed Seed for deterministic randomness.
-   * @returns {AudioBuffer} Generated tapping buffer.
-   * @throws {Error} Throws when invalid durations are passed.
+   * @param {AudioContext} context 現在有効なAudioContext。
+   * @param {number} durationSeconds バッファ長（秒）。
+   * @param {number} seed 決定的乱数に使うシード。
+   * @returns {AudioBuffer} 生成したタッピング用バッファ。
+   * @throws {Error} 不正なdurationが渡された場合にスローする。
    * @example
    * ```ts
    * const tap = engine['renderTapBuffer'](audioContext, 0.25, 23);
@@ -601,13 +601,13 @@ export class SpatialAudioEngine {
   }
 
   /**
-   * Generates a rough scratching texture with repeated high-frequency bursts.
+   * 高周波バーストを繰り返す荒いスクラッチ音テクスチャを生成する。
    *
-   * @param {AudioContext} context Active audio context.
-   * @param {number} durationSeconds Buffer duration in seconds.
-   * @param {number} seed Seed for deterministic randomness.
-   * @returns {AudioBuffer} Generated scratching buffer.
-   * @throws {Error} Throws when invalid durations are passed.
+   * @param {AudioContext} context 現在有効なAudioContext。
+   * @param {number} durationSeconds バッファ長（秒）。
+   * @param {number} seed 決定的乱数に使うシード。
+   * @returns {AudioBuffer} 生成したスクラッチ用バッファ。
+   * @throws {Error} 不正なdurationが渡された場合にスローする。
    * @example
    * ```ts
    * const scratch = engine['renderScratchBuffer'](audioContext, 0.7, 37);
@@ -636,13 +636,13 @@ export class SpatialAudioEngine {
   }
 
   /**
-   * Generates a soft brushing texture with periodic sweeps.
+   * 周期的な掃引を持つ柔らかいブラッシング音を生成する。
    *
-   * @param {AudioContext} context Active audio context.
-   * @param {number} durationSeconds Buffer duration in seconds.
-   * @param {number} seed Seed for deterministic randomness.
-   * @returns {AudioBuffer} Generated brushing buffer.
-   * @throws {Error} Throws when invalid durations are passed.
+   * @param {AudioContext} context 現在有効なAudioContext。
+   * @param {number} durationSeconds バッファ長（秒）。
+   * @param {number} seed 決定的乱数に使うシード。
+   * @returns {AudioBuffer} 生成したブラッシング用バッファ。
+   * @throws {Error} 不正なdurationが渡された場合にスローする。
    * @example
    * ```ts
    * const brush = engine['renderBrushBuffer'](audioContext, 1.1, 51);
@@ -669,13 +669,13 @@ export class SpatialAudioEngine {
   }
 
   /**
-   * Generates a rounded water-drop style sound.
+   * 丸みのある水滴風サウンドを生成する。
    *
-   * @param {AudioContext} context Active audio context.
-   * @param {number} durationSeconds Buffer duration in seconds.
-   * @param {number} seed Seed for deterministic randomness.
-   * @returns {AudioBuffer} Generated water-like buffer.
-   * @throws {Error} Throws when invalid durations are passed.
+   * @param {AudioContext} context 現在有効なAudioContext。
+   * @param {number} durationSeconds バッファ長（秒）。
+   * @param {number} seed 決定的乱数に使うシード。
+   * @returns {AudioBuffer} 生成した水音風バッファ。
+   * @throws {Error} 不正なdurationが渡された場合にスローする。
    * @example
    * ```ts
    * const water = engine['renderWaterBuffer'](audioContext, 0.8, 67);
@@ -702,13 +702,13 @@ export class SpatialAudioEngine {
   }
 
   /**
-   * Generates a subtle ear-cleaning texture with soft scraping details.
+   * 柔らかな擦過音を含む繊細な耳かき音テクスチャを生成する。
    *
-   * @param {AudioContext} context Active audio context.
-   * @param {number} durationSeconds Buffer duration in seconds.
-   * @param {number} seed Seed for deterministic randomness.
-   * @returns {AudioBuffer} Generated ear-cleaning buffer.
-   * @throws {Error} Throws when invalid durations are passed.
+   * @param {AudioContext} context 現在有効なAudioContext。
+   * @param {number} durationSeconds バッファ長（秒）。
+   * @param {number} seed 決定的乱数に使うシード。
+   * @returns {AudioBuffer} 生成した耳かき用バッファ。
+   * @throws {Error} 不正なdurationが渡された場合にスローする。
    * @example
    * ```ts
    * const earCleaning = engine['renderEarCleaningBuffer'](audioContext, 1.0, 62);
@@ -736,12 +736,12 @@ export class SpatialAudioEngine {
   }
 
   /**
-   * Generates long-loop ambient textures for background playback.
+   * 背景再生向けの長尺環境音ループを生成する。
    *
-   * @param {AudioContext} context Active audio context.
-   * @param {SoundDefinition} sound Ambient sound definition.
-   * @returns {AudioBuffer} Generated ambient loop buffer.
-   * @throws {Error} Throws when duration is invalid.
+   * @param {AudioContext} context 現在有効なAudioContext。
+   * @param {SoundDefinition} sound 環境音のサウンド定義。
+   * @returns {AudioBuffer} 生成した環境音ループバッファ。
+   * @throws {Error} durationが不正な場合にスローする。
    * @example
    * ```ts
    * const ambient = engine['renderAmbientBuffer'](audioContext, ambientSound);
@@ -783,12 +783,12 @@ export class SpatialAudioEngine {
   }
 
   /**
-   * Creates a mono buffer for synthesized content.
+   * 合成音用のモノラルバッファを作成する。
    *
-   * @param {AudioContext} context Active audio context.
-   * @param {number} durationSeconds Requested duration in seconds.
-   * @returns {AudioBuffer} Empty mono buffer.
-   * @throws {Error} Throws when duration is not positive.
+   * @param {AudioContext} context 現在有効なAudioContext。
+   * @param {number} durationSeconds 要求する長さ（秒）。
+   * @returns {AudioBuffer} 空のモノラルバッファ。
+   * @throws {Error} durationが正の値でない場合にスローする。
    * @example
    * ```ts
    * const buffer = engine['createBuffer'](audioContext, 1.0);
@@ -804,14 +804,14 @@ export class SpatialAudioEngine {
   }
 
   /**
-   * Computes dynamic gain using sound defaults, gestures, and stroke speed.
+   * サウンド既定値・ジェスチャー・ストローク速度から動的ゲインを計算する。
    *
-   * @param {number} baseGain Sound-specific default gain.
-   * @param {number} intensity Pointer intensity in range 0.0-2.0.
-   * @param {'tap' | 'drag'} gesture Current gesture type.
-   * @param {number} strokeSpeed Pointer speed in pixels per second.
-   * @returns {number} Clamped gain value.
-   * @throws {Error} This method does not throw under normal operation.
+   * @param {number} baseGain サウンド固有のデフォルトゲイン。
+   * @param {number} intensity 0.0〜2.0のポインター強度。
+   * @param {'tap' | 'drag'} gesture 現在のジェスチャー種別。
+   * @param {number} strokeSpeed ポインター速度（ピクセル/秒）。
+   * @returns {number} クランプ済みゲイン値。
+   * @throws {Error} 通常運用ではこのメソッドは例外をスローしない。
    * @example
    * ```ts
    * const gain = engine['computeGain'](0.4, 1, 'drag', 420);
@@ -829,13 +829,13 @@ export class SpatialAudioEngine {
   }
 
   /**
-   * Computes playback rate variation for subtle realism.
+   * 自然さを高めるための再生レート変動を計算する。
    *
-   * @param {SoundCategory} category Sound category.
-   * @param {'tap' | 'drag'} gesture Current gesture type.
-   * @param {number} strokeSpeed Pointer speed in pixels per second.
-   * @returns {number} Playback rate value.
-   * @throws {Error} This method does not throw under normal operation.
+   * @param {SoundCategory} category サウンドカテゴリ。
+   * @param {'tap' | 'drag'} gesture 現在のジェスチャー種別。
+   * @param {number} strokeSpeed ポインター速度（ピクセル/秒）。
+   * @returns {number} 再生レート値。
+   * @throws {Error} 通常運用ではこのメソッドは例外をスローしない。
    * @example
    * ```ts
    * const rate = engine['computePlaybackRate']('water', 'drag', 380);
@@ -868,11 +868,11 @@ export class SpatialAudioEngine {
   }
 
   /**
-   * Returns a deterministic pseudo-random generator.
+   * 決定的な疑似乱数ジェネレーターを返する。
    *
-   * @param {number} seed Initial seed value.
-   * @returns {() => number} Function returning values in [0, 1).
-   * @throws {Error} This method does not throw under normal operation.
+   * @param {number} seed 初期シード値。
+   * @returns {() => number} [0, 1) の値を返す関数。
+   * @throws {Error} 通常運用ではこのメソッドは例外をスローしない。
    * @example
    * ```ts
    * const random = engine['createRandom'](123);
@@ -889,13 +889,13 @@ export class SpatialAudioEngine {
   }
 
   /**
-   * Clamps a number to a range.
+   * 数値を指定範囲にクランプする。
    *
-   * @param {number} value Value to clamp.
-   * @param {number} min Minimum allowed value.
-   * @param {number} max Maximum allowed value.
-   * @returns {number} Clamped value.
-   * @throws {Error} This method does not throw under normal operation.
+   * @param {number} value クランプ対象の値。
+   * @param {number} min 許容される最小値。
+   * @param {number} max 許容される最大値。
+   * @returns {number} クランプ済みの値。
+   * @throws {Error} 通常運用ではこのメソッドは例外をスローしない。
    * @example
    * ```ts
    * const safe = engine['clamp'](2, 0, 1);

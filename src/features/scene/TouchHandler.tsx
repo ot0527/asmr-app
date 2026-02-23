@@ -5,7 +5,7 @@ import type { GestureMetrics, GestureType, TouchHit } from '../../core/types';
 import { mapLocalPointToRegion, mapMeshToRegion } from '../audio/TriggerMapper';
 
 /**
- * Props for pointer-to-raycast interaction handling.
+ * ポインターからレイキャストへの操作処理用Props。
  */
 export interface TouchHandlerProps {
   enabled: boolean;
@@ -25,13 +25,13 @@ interface PointerState {
 }
 
 /**
- * Clamps a number to a range.
+ * 数値を指定範囲にクランプする。
  *
- * @param {number} value Value to clamp.
- * @param {number} min Minimum allowed value.
- * @param {number} max Maximum allowed value.
- * @returns {number} Clamped number.
- * @throws {Error} This function does not throw under normal operation.
+ * @param {number} value クランプ対象の値。
+ * @param {number} min 許容される最小値。
+ * @param {number} max 許容される最大値。
+ * @returns {number} クランプ済み数値。
+ * @throws {Error} 通常運用ではこの関数は例外をスローしない。
  * @example
  * ```ts
  * const clamped = clamp(2.3, 0, 1);
@@ -42,12 +42,12 @@ function clamp(value: number, min: number, max: number): number {
 }
 
 /**
- * Calculates drag metrics used by stroke playback and smoothing.
+ * ストローク再生とスムージングで使うドラッグ指標を計算する。
  *
- * @param {number} movement Pointer movement in pixels.
- * @param {number} elapsedMs Time elapsed since the previous emit.
- * @returns {GestureMetrics} Gesture metrics for audio and interpolation.
- * @throws {Error} This function does not throw under normal operation.
+ * @param {number} movement ポインター移動量（ピクセル）。
+ * @param {number} elapsedMs 前回emitからの経過時間。
+ * @returns {GestureMetrics} 音響制御と補間に使うジェスチャー指標。
+ * @throws {Error} 通常運用ではこの関数は例外をスローしない。
  * @example
  * ```ts
  * const metrics = toGestureMetrics(18, 32);
@@ -65,13 +65,13 @@ function toGestureMetrics(movement: number, elapsedMs: number): GestureMetrics {
 }
 
 /**
- * Converts client coordinates into normalized device coordinates.
+ * クライアント座標を正規化デバイス座標へ変換する。
  *
- * @param {number} clientX Pointer X in viewport coordinates.
- * @param {number} clientY Pointer Y in viewport coordinates.
- * @param {DOMRect} rect Canvas bounding rectangle.
- * @returns {Vector2} Normalized device coordinates in range [-1, 1].
- * @throws {Error} Throws when width or height is zero.
+ * @param {number} clientX ビューポート座標系のポインターX。
+ * @param {number} clientY ビューポート座標系のポインターY。
+ * @param {DOMRect} rect キャンバスの境界矩形。
+ * @returns {Vector2} [-1, 1] の正規化デバイス座標。
+ * @throws {Error} 幅または高さが0の場合にスローする。
  * @example
  * ```ts
  * const ndc = toNormalizedPointer(200, 120, canvasRect);
@@ -89,13 +89,13 @@ function toNormalizedPointer(clientX: number, clientY: number, rect: DOMRect): V
 }
 
 /**
- * Builds an app-level hit object from a Three.js intersection.
+ * Three.jsの交差結果からアプリ層のヒットオブジェクトを構築する。
  *
- * @param {Object3D} headObject Root head object used for local conversion.
- * @param {string} objectName Mesh name returned by raycast.
- * @param {Vector3} worldPoint Intersection point in world coordinates.
- * @returns {TouchHit} Normalized touch hit object.
- * @throws {Error} This function does not throw under normal operation.
+ * @param {Object3D} headObject ローカル座標変換に使う頭部ルートオブジェクト。
+ * @param {string} objectName レイキャストから返されたメッシュ名。
+ * @param {Vector3} worldPoint ワールド座標系での交点。
+ * @returns {TouchHit} 正規化済みタッチヒットオブジェクト。
+ * @throws {Error} 通常運用ではこの関数は例外をスローしない。
  * @example
  * ```ts
  * const hit = buildTouchHit(headGroup, 'ear_left', point);
@@ -115,11 +115,11 @@ function buildTouchHit(headObject: Object3D, objectName: string, worldPoint: Vec
 }
 
 /**
- * Handles pointer events and emits raycast hits as app-level gestures.
+ * ポインターイベントを処理し、レイキャスト結果をアプリ層ジェスチャーとして通知する。
  *
- * @param {TouchHandlerProps} props Pointer and callback configuration.
- * @returns {null} This component renders nothing.
- * @throws {Error} This component does not throw under normal operation.
+ * @param {TouchHandlerProps} props ポインター処理とコールバックの設定。
+ * @returns {null} このコンポーネントは何も描画しない。
+ * @throws {Error} 通常運用ではこのコンポーネントは例外をスローしない。
  * @example
  * ```tsx
  * <TouchHandler enabled headObject={headRef.current} onHit={onHit} onModelPointerStateChange={setState} />
@@ -141,12 +141,12 @@ export function TouchHandler(props: TouchHandlerProps): null {
     const canvasElement = gl.domElement;
 
     /**
-     * Performs raycast against the head object.
+     * 頭部オブジェクトに対してレイキャストを実行する。
      *
-     * @param {number} clientX Pointer X in viewport coordinates.
-     * @param {number} clientY Pointer Y in viewport coordinates.
-     * @returns {TouchHit | null} Touch hit when the model is intersected.
-     * @throws {Error} Throws when pointer normalization fails.
+     * @param {number} clientX ビューポート座標系のポインターX。
+     * @param {number} clientY ビューポート座標系のポインターY。
+     * @returns {TouchHit | null} モデルに交差した場合のタッチヒット。
+     * @throws {Error} ポインター正規化に失敗した場合にスローする。
      * @example
      * ```ts
      * const hit = pickHit(120, 220);
@@ -172,11 +172,11 @@ export function TouchHandler(props: TouchHandlerProps): null {
     };
 
     /**
-     * Handles pointerdown for tap detection on the model.
+     * モデル上のタップ検出のためにpointerdownを処理する。
      *
-     * @param {PointerEvent} event Browser pointer event.
-     * @returns {void} This handler does not return a value.
-     * @throws {Error} This handler does not throw under normal operation.
+     * @param {PointerEvent} event ブラウザのポインターイベント。
+     * @returns {void} このハンドラーは値を返しない。
+     * @throws {Error} 通常運用ではこのハンドラーは例外をスローしない。
      * @example
      * ```ts
      * onPointerDown(event);
@@ -203,11 +203,11 @@ export function TouchHandler(props: TouchHandlerProps): null {
     };
 
     /**
-     * Handles pointermove for continuous drag-trigger playback.
+     * 連続ドラッグトリガー再生のためにpointermoveを処理する。
      *
-     * @param {PointerEvent} event Browser pointer event.
-     * @returns {void} This handler does not return a value.
-     * @throws {Error} This handler does not throw under normal operation.
+     * @param {PointerEvent} event ブラウザのポインターイベント。
+     * @returns {void} このハンドラーは値を返しない。
+     * @throws {Error} 通常運用ではこのハンドラーは例外をスローしない。
      * @example
      * ```ts
      * onPointerMove(event);
@@ -258,11 +258,11 @@ export function TouchHandler(props: TouchHandlerProps): null {
     };
 
     /**
-     * Resets pointer state when interaction finishes.
+     * 操作終了時にポインター状態をリセットする。
      *
-     * @param {PointerEvent} event Browser pointer event.
-     * @returns {void} This handler does not return a value.
-     * @throws {Error} This handler does not throw under normal operation.
+     * @param {PointerEvent} event ブラウザのポインターイベント。
+     * @returns {void} このハンドラーは値を返しない。
+     * @throws {Error} 通常運用ではこのハンドラーは例外をスローしない。
      * @example
      * ```ts
      * onPointerUp(event);

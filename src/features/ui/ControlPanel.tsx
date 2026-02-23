@@ -3,7 +3,7 @@ import { HEAD_REGION_LABEL } from '../../core/constants';
 import type { HeadRegion, SoundDefinition } from '../../core/types';
 
 /**
- * Props for the control panel component.
+ * コントロールパネルコンポーネントのProps。
  */
 export interface ControlPanelProps {
   activeRegion: HeadRegion | null;
@@ -21,11 +21,11 @@ export interface ControlPanelProps {
 }
 
 /**
- * Converts a region id into user-facing text.
+ * 部位IDをユーザー表示用テキストに変換する。
  *
- * @param {HeadRegion | null} region Active region value.
- * @returns {string} Human-readable region text.
- * @throws {Error} This function does not throw under normal operation.
+ * @param {HeadRegion | null} region 現在アクティブな部位。
+ * @returns {string} 表示用の部位テキスト。
+ * @throws {Error} 通常運用ではこの関数は例外をスローしない。
  * @example
  * ```ts
  * const label = toRegionLabel('ear_left');
@@ -40,12 +40,12 @@ function toRegionLabel(region: HeadRegion | null): string {
 }
 
 /**
- * Handles BGM select changes and normalizes empty values to null.
+ * BGM選択変更を処理し、空値をnullに正規化する。
  *
- * @param {ChangeEvent<HTMLSelectElement>} event Select change event.
- * @param {(bgmSoundId: string | null) => void} onSelectBgm BGM selection callback.
- * @returns {void} This function does not return a value.
- * @throws {Error} This function does not throw under normal operation.
+ * @param {ChangeEvent<HTMLSelectElement>} event セレクト変更イベント。
+ * @param {(bgmSoundId: string | null) => void} onSelectBgm BGM選択時のコールバック。
+ * @returns {void} この関数は値を返しない。
+ * @throws {Error} 通常運用ではこの関数は例外をスローしない。
  * @example
  * ```ts
  * handleBgmSelection(event, onSelectBgm);
@@ -60,11 +60,11 @@ function handleBgmSelection(
 }
 
 /**
- * Renders playback controls and ambient/BGM controls.
+ * 再生コントロールと環境音/BGMコントロールを描画する。
  *
- * @param {ControlPanelProps} props Panel state and callbacks.
- * @returns {JSX.Element} Control panel view.
- * @throws {Error} This component does not throw under normal operation.
+ * @param {ControlPanelProps} props パネルの状態とコールバック。
+ * @returns {JSX.Element} コントロールパネル表示。
+ * @throws {Error} 通常運用ではこのコンポーネントは例外をスローしない。
  * @example
  * ```tsx
  * <ControlPanel {...props} />

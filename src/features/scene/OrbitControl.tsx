@@ -3,18 +3,18 @@ import { OrbitControls } from '@react-three/drei';
 import { ORBIT_LIMITS } from '../../core/constants';
 
 /**
- * Props for orbit control behavior.
+ * OrbitControlの動作用Props。
  */
 export interface OrbitControlProps {
   enabled: boolean;
 }
 
 /**
- * Renders constrained orbit controls for head rotation.
+ * 頭部回転用の制約付きOrbitControlを描画する。
  *
- * @param {OrbitControlProps} props Orbit control configuration.
- * @returns {JSX.Element} Configured Drei OrbitControls component.
- * @throws {Error} This component does not throw under normal operation.
+ * @param {OrbitControlProps} props OrbitControlの設定。
+ * @returns {JSX.Element} 設定済みのDrei OrbitControlsコンポーネント。
+ * @throws {Error} 通常運用ではこのコンポーネントは例外をスローしない。
  * @example
  * ```tsx
  * <OrbitControl enabled={!isTouchingModel} />

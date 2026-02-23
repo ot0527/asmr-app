@@ -4,13 +4,13 @@ const HEAD_RADIUS = 0.84;
 const EAR_RADIUS = 0.2;
 
 /**
- * Computes a Gaussian-like weight used to sculpt smooth anatomical features.
+ * 滑らかな解剖形状を作るためのガウス風重みを計算する。
  *
- * @param {number} value Input value.
- * @param {number} center Peak center value.
- * @param {number} spread Spread value controlling smoothness.
- * @returns {number} Weight in range (0, 1].
- * @throws {Error} Throws when spread is zero or negative.
+ * @param {number} value 入力値。
+ * @param {number} center ピーク中心値。
+ * @param {number} spread 滑らかさを制御する広がり値。
+ * @returns {number} (0, 1] 範囲の重み。
+ * @throws {Error} spreadが0以下の場合にスローする。
  * @example
  * ```ts
  * const weight = gaussian(0.2, 0, 0.1);
@@ -26,13 +26,13 @@ function gaussian(value: number, center: number, spread: number): number {
 }
 
 /**
- * Returns a smooth interpolation factor between two edges.
+ * 2つのエッジ間の滑らかな補間係数を返する。
  *
- * @param {number} edge0 Lower edge.
- * @param {number} edge1 Upper edge.
- * @param {number} value Input value.
- * @returns {number} Smoothed interpolation in [0, 1].
- * @throws {Error} Throws when edges are equal.
+ * @param {number} edge0 下限エッジ。
+ * @param {number} edge1 上限エッジ。
+ * @param {number} value 入力値。
+ * @returns {number} [0, 1] の平滑化補間値。
+ * @throws {Error} エッジ値が同一の場合にスローする。
  * @example
  * ```ts
  * const factor = smoothstep(-1, 1, 0.4);
@@ -48,10 +48,10 @@ function smoothstep(edge0: number, edge1: number, value: number): number {
 }
 
 /**
- * Creates a non-spherical anatomical head surface for full-area raycasting.
+ * 全面レイキャスト向けに非球面の解剖学的頭部表面を作成する。
  *
- * @returns {BufferGeometry} Procedurally sculpted head geometry.
- * @throws {Error} Throws when geometry attribute access fails.
+ * @returns {BufferGeometry} 手続き生成で造形した頭部ジオメトリ。
+ * @throws {Error} ジオメトリ属性アクセスに失敗した場合にスローする。
  * @example
  * ```ts
  * const geometry = createHeadSurfaceGeometry();
@@ -103,10 +103,10 @@ export function createHeadSurfaceGeometry(): BufferGeometry {
 }
 
 /**
- * Creates a stylized anatomical ear geometry with helix and concha contours.
+ * 耳輪と耳甲介の輪郭を持つ耳ジオメトリを作成する。
  *
- * @returns {BufferGeometry} Procedurally sculpted ear geometry.
- * @throws {Error} Throws when geometry attribute access fails.
+ * @returns {BufferGeometry} 手続き生成で造形した耳ジオメトリ。
+ * @throws {Error} ジオメトリ属性アクセスに失敗した場合にスローする。
  * @example
  * ```ts
  * const geometry = createEarGeometry();

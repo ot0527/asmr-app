@@ -2,7 +2,7 @@ import type { ChangeEvent, ReactElement } from 'react';
 import type { UserSoundAsset } from '../../core/types';
 
 /**
- * Props for the recording panel component.
+ * 録音パネルコンポーネントのProps。
  */
 export interface RecordingUIProps {
   isRecording: boolean;
@@ -16,11 +16,11 @@ export interface RecordingUIProps {
 }
 
 /**
- * Converts timestamp to a short local date string.
+ * タイムスタンプを短いローカル日時文字列に変換する。
  *
- * @param {number} timestamp Epoch milliseconds.
- * @returns {string} Localized short date-time.
- * @throws {Error} This function does not throw under normal operation.
+ * @param {number} timestamp UNIXエポックミリ秒。
+ * @returns {string} ローカライズ済み短縮日時文字列。
+ * @throws {Error} 通常運用ではこの関数は例外をスローしない。
  * @example
  * ```ts
  * const label = toShortDateTime(Date.now());
@@ -36,11 +36,11 @@ function toShortDateTime(timestamp: number): string {
 }
 
 /**
- * Renders recording and user-sound management controls.
+ * 録音とユーザー音源管理コントロールを描画する。
  *
- * @param {RecordingUIProps} props Recording state and callbacks.
- * @returns {JSX.Element} Recording panel UI.
- * @throws {Error} This component does not throw under normal operation.
+ * @param {RecordingUIProps} props 録音状態とコールバック。
+ * @returns {JSX.Element} 録音パネルUI。
+ * @throws {Error} 通常運用ではこのコンポーネントは例外をスローしない。
  * @example
  * ```tsx
  * <RecordingUI {...props} />
@@ -48,11 +48,11 @@ function toShortDateTime(timestamp: number): string {
  */
 export function RecordingUI(props: RecordingUIProps): ReactElement {
   /**
-   * Handles file picker changes and forwards the file to import logic.
+   * ファイル選択変更を処理し、ファイルをインポート処理へ渡する。
    *
-   * @param {ChangeEvent<HTMLInputElement>} event File input change event.
-   * @returns {void} This handler does not return a value.
-   * @throws {Error} This handler does not throw under normal operation.
+   * @param {ChangeEvent<HTMLInputElement>} event ファイル入力の変更イベント。
+   * @returns {void} このハンドラーは値を返しない。
+   * @throws {Error} 通常運用ではこのハンドラーは例外をスローしない。
    * @example
    * ```ts
    * handleFileChange(event);

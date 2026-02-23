@@ -3,11 +3,11 @@ import { AUDIO_SCALE } from '../../core/constants';
 import type { AudioPosition, HeadRegion } from '../../core/types';
 
 /**
- * Maps mesh names to normalized head regions.
+ * メッシュ名を正規化された頭部部位へマッピングする。
  *
- * @param {string} meshName Mesh name from raycast intersection.
- * @returns {HeadRegion} Normalized region identifier.
- * @throws {Error} This method does not throw under normal operation.
+ * @param {string} meshName レイキャスト交差で取得したメッシュ名。
+ * @returns {HeadRegion} 正規化された部位識別子。
+ * @throws {Error} 通常運用ではこのメソッドは例外をスローしない。
  * @example
  * ```ts
  * const region = mapMeshToRegion('ear_left');
@@ -28,11 +28,11 @@ export function mapMeshToRegion(meshName: string): HeadRegion {
 }
 
 /**
- * Derives a region from local hit coordinates when mesh names are generic.
+ * メッシュ名が汎用的な場合にローカル座標から部位を推定する。
  *
- * @param {Vector3} localPoint Hit position in the head model's local space.
- * @returns {HeadRegion} Estimated region identifier.
- * @throws {Error} This method does not throw under normal operation.
+ * @param {Vector3} localPoint 頭部モデルのローカル座標系におけるヒット位置。
+ * @returns {HeadRegion} 推定した部位識別子。
+ * @throws {Error} 通常運用ではこのメソッドは例外をスローしない。
  * @example
  * ```ts
  * const region = mapLocalPointToRegion(new Vector3(0.8, 0, 0));
@@ -63,13 +63,13 @@ export function mapLocalPointToRegion(localPoint: Vector3): HeadRegion {
 }
 
 /**
- * Converts a world-space touch point into audio-space coordinates.
+ * ワールド空間のタッチ点を音響空間座標へ変換する。
  *
- * @param {Vector3} intersectPoint Raycast hit point in world coordinates.
- * @param {Vector3} headCenter World-space center of the head model.
- * @param {Quaternion} headQuaternion World-space rotation of the head model.
- * @returns {AudioPosition} Position suitable for PannerNode.
- * @throws {Error} This method does not throw under normal operation.
+ * @param {Vector3} intersectPoint ワールド座標系でのレイキャストヒット点。
+ * @param {Vector3} headCenter ワールド空間における頭部モデル中心。
+ * @param {Quaternion} headQuaternion ワールド空間における頭部モデル回転。
+ * @returns {AudioPosition} PannerNodeに適した座標。
+ * @throws {Error} 通常運用ではこのメソッドは例外をスローしない。
  * @example
  * ```ts
  * const position = touchToAudioPosition(hitPoint, center, quaternion);

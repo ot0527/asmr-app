@@ -4,19 +4,19 @@ import type { HeadRegion } from '../../core/types';
 import { createEarGeometry, createHeadSurfaceGeometry } from './HeadModelGeometry';
 
 /**
- * Props for rendering and highlighting the procedural head model.
+ * 手続き生成頭部モデルの描画とハイライト用Props。
  */
 export interface HeadModelProps {
   highlightedRegion: HeadRegion | null;
 }
 
 /**
- * Returns emissive intensity for visual region feedback.
+ * 部位フィードバック表示用の発光強度を返する。
  *
- * @param {HeadRegion} region Region represented by a mesh.
- * @param {HeadRegion | null} highlightedRegion Currently highlighted region.
- * @returns {number} Emissive intensity for the mesh material.
- * @throws {Error} This function does not throw under normal operation.
+ * @param {HeadRegion} region メッシュが表す部位。
+ * @param {HeadRegion | null} highlightedRegion 現在ハイライト中の部位。
+ * @returns {number} メッシュ材質に設定する発光強度。
+ * @throws {Error} 通常運用ではこの関数は例外をスローしない。
  * @example
  * ```ts
  * const intensity = getEmissiveIntensity('ear_left', 'ear_left');
@@ -40,12 +40,12 @@ function getEmissiveIntensity(region: HeadRegion, highlightedRegion: HeadRegion 
 }
 
 /**
- * Safely disposes geometries created inside the component.
+ * コンポーネント内で作成したジオメトリを安全に破棄する。
  *
- * @param {BufferGeometry} headGeometry Procedural head surface geometry.
- * @param {BufferGeometry} earGeometry Procedural ear geometry.
- * @returns {void} This function does not return a value.
- * @throws {Error} This function does not throw under normal operation.
+ * @param {BufferGeometry} headGeometry 手続き生成した頭部表面ジオメトリ。
+ * @param {BufferGeometry} earGeometry 手続き生成した耳ジオメトリ。
+ * @returns {void} この関数は値を返しない。
+ * @throws {Error} 通常運用ではこの関数は例外をスローしない。
  * @example
  * ```ts
  * disposeGeometries(headGeometry, earGeometry);
@@ -60,12 +60,12 @@ function disposeGeometries(
 }
 
 /**
- * Renders an anatomical head model with full-surface raycast targets.
+ * 全面レイキャスト対象を持つ解剖学的頭部モデルを描画する。
  *
- * @param {HeadModelProps} props Rendering configuration.
- * @param {React.ForwardedRef<Group>} ref Group ref used by raycaster logic.
- * @returns {JSX.Element} Anatomical procedural head model.
- * @throws {Error} This component does not throw under normal operation.
+ * @param {HeadModelProps} props 描画設定。
+ * @param {React.ForwardedRef<Group>} ref レイキャスト処理で使うGroup参照。
+ * @returns {JSX.Element} 解剖学的に表現した手続き生成頭部モデル。
+ * @throws {Error} 通常運用ではこのコンポーネントは例外をスローしない。
  * @example
  * ```tsx
  * <HeadModel highlightedRegion={activeRegion} ref={headRef} />

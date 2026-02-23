@@ -1,7 +1,7 @@
 import type { Vector3 } from 'three';
 
 /**
- * Supported sound categories in the Phase2 palette.
+ * Phase2パレットでサポートするサウンドカテゴリ。
  */
 export type SoundCategory =
   | 'whisper'
@@ -14,22 +14,22 @@ export type SoundCategory =
   | 'user';
 
 /**
- * Gesture types detected from pointer interaction.
+ * ポインター操作で検出するジェスチャー種別。
  */
 export type GestureType = 'tap' | 'drag';
 
 /**
- * Trigger mode deciding when the sound should be played.
+ * サウンド再生タイミングを決めるトリガーモード。
  */
 export type TriggerMode = 'tap' | 'drag' | 'both' | 'bgm';
 
 /**
- * Source type indicating how audio data is prepared.
+ * 音声データの準備方法を示すソース種別。
  */
 export type SoundSourceType = 'synth' | 'user_recording' | 'user_imported';
 
 /**
- * Named regions on the head model used for trigger mapping.
+ * トリガーマッピングで使う頭部モデル上の命名部位。
  */
 export type HeadRegion =
   | 'ear_left'
@@ -40,7 +40,7 @@ export type HeadRegion =
   | 'head_core';
 
 /**
- * Serializable 3D position for audio panning.
+ * 音声パンニング用のシリアライズ可能な3D座標。
  */
 export interface AudioPosition {
   x: number;
@@ -49,7 +49,7 @@ export interface AudioPosition {
 }
 
 /**
- * Motion metrics extracted from pointer interactions.
+ * ポインター操作から抽出した動作指標。
  */
 export interface GestureMetrics {
   speedPxPerSecond: number;
@@ -57,7 +57,7 @@ export interface GestureMetrics {
 }
 
 /**
- * Definition of an ASMR sound item shown in the palette.
+ * パレットに表示するASMRサウンド項目の定義。
  */
 export interface SoundDefinition {
   id: string;
@@ -77,7 +77,7 @@ export interface SoundDefinition {
 }
 
 /**
- * A raycast hit normalized into app-level interaction data.
+ * レイキャスト結果をアプリ層の操作データに正規化した値。
  */
 export interface TouchHit {
   region: HeadRegion;
@@ -86,7 +86,7 @@ export interface TouchHit {
 }
 
 /**
- * Payload used by the audio engine to play a sound.
+ * 音響エンジンがサウンド再生に使うペイロード。
  */
 export interface PlaybackRequest {
   sound: SoundDefinition;
@@ -97,7 +97,7 @@ export interface PlaybackRequest {
 }
 
 /**
- * User-managed raw sound data persisted in IndexedDB.
+ * IndexedDBに永続化するユーザー管理の生音声データ。
  */
 export interface UserSoundAsset {
   id: string;
@@ -110,7 +110,7 @@ export interface UserSoundAsset {
 }
 
 /**
- * Persistent user preferences for ambient playback.
+ * 環境音再生の永続化ユーザー設定。
  */
 export interface BgmState {
   soundId: string | null;

@@ -1,17 +1,17 @@
 /**
- * Callback signature for audio input level updates.
+ * 音声入力レベル更新用コールバックのシグネチャ。
  */
 export type RecordingLevelListener = (level: number) => void;
 
 /**
- * Options for starting a recording session.
+ * 録音セッション開始時のオプション。
  */
 export interface StartRecordingOptions {
   onLevel?: RecordingLevelListener;
 }
 
 /**
- * Browser MediaRecorder wrapper with live level metering.
+ * ライブレベル計測を備えたブラウザMediaRecorderラッパー。
  */
 export class Recorder {
   private mediaRecorder: MediaRecorder | null = null;
@@ -23,10 +23,10 @@ export class Recorder {
   private levelListener: RecordingLevelListener | null = null;
 
   /**
-   * Returns whether recording is currently active.
+   * 録音が現在有効かどうかを返する。
    *
-   * @returns {boolean} True when a recording session is active.
-   * @throws {Error} This method does not throw under normal operation.
+   * @returns {boolean} 録音セッションが有効な場合はtrue。
+   * @throws {Error} 通常運用ではこのメソッドは例外をスローしない。
    * @example
    * ```ts
    * if (recorder.isRecording()) {
@@ -39,11 +39,11 @@ export class Recorder {
   }
 
   /**
-   * Starts a new microphone recording session.
+   * 新しいマイク録音セッションを開始する。
    *
-   * @param {StartRecordingOptions} options Recording options.
-   * @returns {Promise<void>} Resolves when recording has started.
-   * @throws {Error} Throws when media APIs are unavailable or permission is denied.
+   * @param {StartRecordingOptions} options 録音オプション。
+   * @returns {Promise<void>} 録音開始後に解決する。
+   * @throws {Error} Media APIが利用できない、または権限が拒否された場合にスローする。
    * @example
    * ```ts
    * await recorder.start({ onLevel: setLevel });
@@ -79,10 +79,10 @@ export class Recorder {
   }
 
   /**
-   * Stops recording and returns the captured audio blob.
+   * 録音を停止し、取得した音声Blobを返する。
    *
-   * @returns {Promise<Blob>} Captured audio blob.
-   * @throws {Error} Throws when no active recording exists.
+   * @returns {Promise<Blob>} 録音で取得した音声Blob。
+   * @throws {Error} 有効な録音セッションがない場合にスローする。
    * @example
    * ```ts
    * const blob = await recorder.stop();
@@ -115,10 +115,10 @@ export class Recorder {
   }
 
   /**
-   * Cancels recording and discards captured chunks.
+   * 録音をキャンセルし、取得済みチャンクを破棄する。
    *
-   * @returns {void} This method does not return a value.
-   * @throws {Error} This method does not throw under normal operation.
+   * @returns {void} このメソッドは値を返しない。
+   * @throws {Error} 通常運用ではこのメソッドは例外をスローしない。
    * @example
    * ```ts
    * recorder.cancel();
@@ -134,10 +134,10 @@ export class Recorder {
   }
 
   /**
-   * Releases all internal resources.
+   * 内部リソースをすべて解放する。
    *
-   * @returns {void} This method does not return a value.
-   * @throws {Error} This method does not throw under normal operation.
+   * @returns {void} このメソッドは値を返しない。
+   * @throws {Error} 通常運用ではこのメソッドは例外をスローしない。
    * @example
    * ```ts
    * recorder.dispose();
@@ -148,10 +148,10 @@ export class Recorder {
   }
 
   /**
-   * Resolves a recorder configuration supported by the current browser.
+   * 現在のブラウザでサポートされるRecorder設定を解決する。
    *
-   * @returns {MediaRecorderOptions} Supported MediaRecorder options.
-   * @throws {Error} This method does not throw under normal operation.
+   * @returns {MediaRecorderOptions} サポートされるMediaRecorderオプション。
+   * @throws {Error} 通常運用ではこのメソッドは例外をスローしない。
    * @example
    * ```ts
    * const options = recorder['resolveRecorderOptions']();
@@ -170,11 +170,11 @@ export class Recorder {
   }
 
   /**
-   * Starts analyzer-based input metering for the active stream.
+   * 有効ストリームに対してAnalyserベースの入力計測を開始する。
    *
-   * @param {MediaStream} stream Active media stream.
-   * @returns {void} This method does not return a value.
-   * @throws {Error} This method does not throw under normal operation.
+   * @param {MediaStream} stream 現在有効なメディアストリーム。
+   * @returns {void} このメソッドは値を返しない。
+   * @throws {Error} 通常運用ではこのメソッドは例外をスローしない。
    * @example
    * ```ts
    * recorder['startLevelMeter'](stream);
@@ -200,10 +200,10 @@ export class Recorder {
     const timeDomainData = new Float32Array(this.meterAnalyser.fftSize);
 
     /**
-     * Samples waveform amplitude and emits normalized RMS level.
+     * 波形振幅をサンプリングし、正規化RMSレベルを通知する。
      *
-     * @returns {void} This callback does not return a value.
-     * @throws {Error} This callback does not throw under normal operation.
+     * @returns {void} このコールバックは値を返しない。
+     * @throws {Error} 通常運用ではこのコールバックは例外をスローしない。
      * @example
      * ```ts
      * sampleLevel();
@@ -232,10 +232,10 @@ export class Recorder {
   }
 
   /**
-   * Stops tracks and clears metering resources.
+   * トラックを停止し、計測リソースを解放する。
    *
-   * @returns {void} This method does not return a value.
-   * @throws {Error} This method does not throw under normal operation.
+   * @returns {void} このメソッドは値を返しない。
+   * @throws {Error} 通常運用ではこのメソッドは例外をスローしない。
    * @example
    * ```ts
    * recorder['cleanupMediaResources']();

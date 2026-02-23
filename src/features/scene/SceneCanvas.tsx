@@ -14,7 +14,7 @@ import { OrbitControl } from './OrbitControl';
 import { TouchHandler } from './TouchHandler';
 
 /**
- * Payload emitted when the model interaction should trigger playback.
+ * モデル操作が再生を起動すべきときに通知するペイロード。
  */
 export interface SceneTriggerPayload {
   region: HeadRegion;
@@ -24,7 +24,7 @@ export interface SceneTriggerPayload {
 }
 
 /**
- * Props required to render and control the interactive scene.
+ * インタラクティブシーンの描画と制御に必要なProps。
  */
 export interface SceneCanvasProps {
   highlightedRegion: HeadRegion | null;
@@ -34,14 +34,14 @@ export interface SceneCanvasProps {
 }
 
 /**
- * Converts a touch hit into an audio trigger payload.
+ * タッチヒットを音声トリガーペイロードへ変換する。
  *
- * @param {Group} headGroup Root group of the head model.
- * @param {TouchHit} hit Normalized hit object from raycasting.
- * @param {'tap' | 'drag'} gesture Pointer gesture type.
- * @param {GestureMetrics} gestureMetrics Pointer speed and smoothing metrics.
- * @returns {SceneTriggerPayload} Scene trigger payload.
- * @throws {Error} This function does not throw under normal operation.
+ * @param {Group} headGroup 頭部モデルのルートGroup。
+ * @param {TouchHit} hit レイキャスト結果を正規化したヒットオブジェクト。
+ * @param {'tap' | 'drag'} gesture ポインタージェスチャー種別。
+ * @param {GestureMetrics} gestureMetrics ポインター速度とスムージング指標。
+ * @returns {SceneTriggerPayload} シーントリガーペイロード。
+ * @throws {Error} 通常運用ではこの関数は例外をスローしない。
  * @example
  * ```ts
  * const payload = buildSceneTrigger(headRef.current, hit, 'tap');
@@ -68,11 +68,11 @@ function buildSceneTrigger(
 }
 
 /**
- * Renders the R3F canvas including model, controls, and touch handlers.
+ * モデル・コントロール・タッチハンドラーを含むR3Fキャンバスを描画する。
  *
- * @param {SceneCanvasProps} props Scene interaction callbacks and UI state.
- * @returns {JSX.Element} Interactive Three.js canvas.
- * @throws {Error} This component does not throw under normal operation.
+ * @param {SceneCanvasProps} props シーン操作用コールバックとUI状態。
+ * @returns {JSX.Element} 操作可能なThree.jsキャンバス。
+ * @throws {Error} 通常運用ではこのコンポーネントは例外をスローしない。
  * @example
  * ```tsx
  * <SceneCanvas highlightedRegion={activeRegion} onRegionHover={setRegion} onTrigger={play} />
@@ -84,11 +84,11 @@ export function SceneCanvas(props: SceneCanvasProps): ReactElement {
   const [lockOrbit, setLockOrbit] = useState<boolean>(false);
 
   /**
-   * Keeps mutable and reactive references to the head group synchronized.
+   * 頭部Groupへのミュータブル参照とリアクティブ参照を同期する。
    *
-   * @param {Group | null} group Mounted head group instance.
-   * @returns {void} This callback does not return a value.
-   * @throws {Error} This callback does not throw under normal operation.
+   * @param {Group | null} group マウント済みの頭部Groupインスタンス。
+   * @returns {void} このコールバックは値を返しない。
+   * @throws {Error} 通常運用ではこのコールバックは例外をスローしない。
    * @example
    * ```ts
    * setHeadGroupRef(group);
@@ -100,12 +100,12 @@ export function SceneCanvas(props: SceneCanvasProps): ReactElement {
   }, []);
 
   /**
-   * Handles normalized touch hits from TouchHandler.
+   * TouchHandlerからの正規化済みタッチヒットを処理する。
    *
-   * @param {TouchHit} hit Raycast result mapped to app-level data.
-   * @param {'tap' | 'drag'} gesture Pointer gesture type.
-   * @returns {void} This callback does not return a value.
-   * @throws {Error} This callback does not throw under normal operation.
+   * @param {TouchHit} hit アプリ層データへ変換済みのレイキャスト結果。
+   * @param {'tap' | 'drag'} gesture ポインタージェスチャー種別。
+   * @returns {void} このコールバックは値を返しない。
+   * @throws {Error} 通常運用ではこのコールバックは例外をスローしない。
    * @example
    * ```ts
    * handleHit(hit, 'tap');

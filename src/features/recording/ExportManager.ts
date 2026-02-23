@@ -5,12 +5,12 @@ const DATABASE_VERSION = 1;
 const STORE_NAME = 'user_sounds';
 
 /**
- * Creates a promise around one IndexedDB request.
+ * 1件のIndexedDBリクエストをPromise化する。
  *
  * @template T
- * @param {IDBRequest<T>} request IndexedDB request.
- * @returns {Promise<T>} Resolved request value.
- * @throws {Error} Throws when the request fails.
+ * @param {IDBRequest<T>} request IndexedDBリクエスト。
+ * @returns {Promise<T>} 解決したリクエスト値。
+ * @throws {Error} リクエストが失敗した場合にスローする。
  * @example
  * ```ts
  * const value = await requestToPromise(request);
@@ -29,10 +29,10 @@ function requestToPromise<T>(request: IDBRequest<T>): Promise<T> {
 }
 
 /**
- * Generates a stable id for a new user sound asset.
+ * 新規ユーザー音源アセット用の安定したIDを生成する。
  *
- * @returns {string} Unique identifier.
- * @throws {Error} This function does not throw under normal operation.
+ * @returns {string} 一意な識別子。
+ * @throws {Error} 通常運用ではこの関数は例外をスローしない。
  * @example
  * ```ts
  * const id = generateAssetId();
@@ -47,17 +47,17 @@ function generateAssetId(): string {
 }
 
 /**
- * Repository class for user sounds stored in IndexedDB.
+ * IndexedDBに保存したユーザー音源のリポジトリクラス。
  */
 export class ExportManager {
   private openPromise: Promise<IDBDatabase> | null = null;
 
   /**
-   * Saves one user sound blob and returns the stored record.
+   * ユーザー音源Blobを1件保存し、保存レコードを返する。
    *
-   * @param {{ name: string; kind: 'recording' | 'imported'; blob: Blob }} input Sound payload.
-   * @returns {Promise<UserSoundAsset>} Stored asset record.
-   * @throws {Error} Throws when IndexedDB is not available.
+   * @param {{ name: string; kind: 'recording' | 'imported'; blob: Blob }} input 保存対象のサウンドペイロード。
+   * @returns {Promise<UserSoundAsset>} 保存済みアセットレコード。
+   * @throws {Error} IndexedDBが利用できない場合にスローする。
    * @example
    * ```ts
    * const asset = await exportManager.saveSound({ name: 'My Record', kind: 'recording', blob });
@@ -89,10 +89,10 @@ export class ExportManager {
   }
 
   /**
-   * Lists all stored user sound assets sorted by recency.
+   * 保存済みユーザー音源アセットを新しい順で一覧取得する。
    *
-   * @returns {Promise<UserSoundAsset[]>} Stored sound assets.
-   * @throws {Error} Throws when IndexedDB access fails.
+   * @returns {Promise<UserSoundAsset[]>} 保存済みサウンドアセット一覧。
+   * @throws {Error} IndexedDBへのアクセスに失敗した場合にスローする。
    * @example
    * ```ts
    * const assets = await exportManager.listSounds();
@@ -111,11 +111,11 @@ export class ExportManager {
   }
 
   /**
-   * Deletes one stored user sound asset.
+   * 保存済みユーザー音源アセットを1件削除する。
    *
-   * @param {string} assetId Target asset id.
-   * @returns {Promise<void>} Resolves after deletion.
-   * @throws {Error} Throws when IndexedDB access fails.
+   * @param {string} assetId 対象アセットID。
+   * @returns {Promise<void>} 削除後に解決する。
+   * @throws {Error} IndexedDBへのアクセスに失敗した場合にスローする。
    * @example
    * ```ts
    * await exportManager.deleteSound(assetId);
@@ -130,11 +130,11 @@ export class ExportManager {
   }
 
   /**
-   * Decodes a blob into an AudioBuffer for Web Audio playback.
+   * BlobをWeb Audio再生用AudioBufferへデコードする。
    *
-   * @param {Blob} blob Source audio blob.
-   * @returns {Promise<AudioBuffer>} Decoded audio buffer.
-   * @throws {Error} Throws when Web Audio API is unavailable or decoding fails.
+   * @param {Blob} blob 入力の音声Blob。
+   * @returns {Promise<AudioBuffer>} デコード済みAudioBuffer。
+   * @throws {Error} Web Audio APIが利用できない、またはデコードに失敗した場合にスローする。
    * @example
    * ```ts
    * const buffer = await exportManager.decodeToAudioBuffer(blob);
@@ -158,10 +158,10 @@ export class ExportManager {
   }
 
   /**
-   * Resolves an open IndexedDB connection.
+   * オープン済みのIndexedDB接続を解決する。
    *
-   * @returns {Promise<IDBDatabase>} Open database instance.
-   * @throws {Error} Throws when IndexedDB is unavailable.
+   * @returns {Promise<IDBDatabase>} オープン済みのデータベースインスタンス。
+   * @throws {Error} IndexedDBが利用不可の場合にスローする。
    * @example
    * ```ts
    * const database = await exportManager['getDatabase']();
@@ -201,11 +201,11 @@ export class ExportManager {
   }
 
   /**
-   * Waits for one transaction to complete or fail.
+   * 1件のトランザクションが完了または失敗するまで待機する。
    *
-   * @param {IDBTransaction} transaction Active IndexedDB transaction.
-   * @returns {Promise<void>} Resolves when the transaction completes.
-   * @throws {Error} Throws when the transaction aborts or errors.
+   * @param {IDBTransaction} transaction 現在有効なIndexedDBトランザクション。
+   * @returns {Promise<void>} トランザクション完了時に解決する。
+   * @throws {Error} トランザクションが中断またはエラーになった場合にスローする。
    * @example
    * ```ts
    * await exportManager['awaitTransactionComplete'](transaction);

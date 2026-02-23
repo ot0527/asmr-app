@@ -1,15 +1,15 @@
 /**
- * Minimal mixer for controlling global output gain.
+ * 全体出力ゲイン制御用の最小構成ミキサー。
  */
 export class AudioMixer {
   private masterGainNode: GainNode | null = null;
 
   /**
-   * Initializes and returns the master gain node.
+   * マスターGainNodeを初期化して返する。
    *
-   * @param {AudioContext} context Audio context where the node is created.
-   * @returns {GainNode} Master gain node connected to destination.
-   * @throws {Error} Throws when the context cannot create gain nodes.
+   * @param {AudioContext} context ノードを生成するAudioContext。
+   * @returns {GainNode} destinationに接続済みのマスターGainNode。
+   * @throws {Error} コンテキストでGainNodeを生成できない場合にスローする。
    * @example
    * ```ts
    * const mixer = new AudioMixer();
@@ -30,11 +30,11 @@ export class AudioMixer {
   }
 
   /**
-   * Updates the master output gain.
+   * マスター出力ゲインを更新する。
    *
-   * @param {number} gainValue Linear gain value from 0.0 to 1.5.
-   * @returns {void} This method does not return a value.
-   * @throws {Error} Throws when the mixer was not initialized.
+   * @param {number} gainValue 0.0〜1.5の線形ゲイン値。
+   * @returns {void} このメソッドは値を返しない。
+   * @throws {Error} ミキサーが初期化されていない場合にスローする。
    * @example
    * ```ts
    * mixer.setMasterGain(0.7);
@@ -54,10 +54,10 @@ export class AudioMixer {
   }
 
   /**
-   * Releases all mixer resources.
+   * ミキサー関連リソースをすべて解放する。
    *
-   * @returns {void} This method does not return a value.
-   * @throws {Error} This method does not throw under normal operation.
+   * @returns {void} このメソッドは値を返しない。
+   * @throws {Error} 通常運用ではこのメソッドは例外をスローしない。
    * @example
    * ```ts
    * mixer.dispose();

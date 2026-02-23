@@ -2,10 +2,10 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
 /**
- * Vite build settings for the ASMR prototype.
+ * ASMRプロトタイプ向けViteビルド設定。
  *
- * @returns {import('vite').UserConfig} React-enabled Vite configuration.
- * @throws {Error} Throws when the plugin resolution fails.
+ * @returns {import('vite').UserConfig} React対応のVite設定。
+ * @throws {Error} プラグイン解決に失敗した場合にスローする。
  * @example
  * ```ts
  * export default defineConfig({ plugins: [react()] });

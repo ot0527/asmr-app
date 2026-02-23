@@ -1,17 +1,17 @@
 import type { SoundCategory, SoundDefinition, TriggerMode } from '../../core/types';
 
 /**
- * Mutable sound metadata store used by UI and playback logic.
+ * UIと再生ロジックで使う可変サウンドメタデータストア。
  */
 export class SoundBank {
   private readonly soundMap: Map<string, SoundDefinition>;
 
   /**
-   * Creates a new sound bank from static and dynamic definitions.
+   * 静的・動的定義から新しいサウンドバンクを作成する。
    *
-   * @param {SoundDefinition[]} sounds Source sound definitions.
-   * @returns {void} This constructor does not return a value.
-   * @throws {Error} Throws when duplicate sound ids are provided.
+   * @param {SoundDefinition[]} sounds 元となるサウンド定義一覧。
+   * @returns {void} このコンストラクターは値を返しない。
+   * @throws {Error} 重複するサウンドIDが渡された場合にスローする。
    * @example
    * ```ts
    * const bank = new SoundBank(SOUND_DEFINITIONS);
@@ -23,10 +23,10 @@ export class SoundBank {
   }
 
   /**
-   * Returns all sound definitions in insertion order.
+   * 挿入順のまま全サウンド定義を返する。
    *
-   * @returns {SoundDefinition[]} Ordered list of available sounds.
-   * @throws {Error} This method does not throw under normal operation.
+   * @returns {SoundDefinition[]} 利用可能なサウンド一覧（順序保持）。
+   * @throws {Error} 通常運用ではこのメソッドは例外をスローしない。
    * @example
    * ```ts
    * const sounds = bank.getAll();
@@ -37,11 +37,11 @@ export class SoundBank {
   }
 
   /**
-   * Returns sounds belonging to one category.
+   * 指定カテゴリに属するサウンドを返する。
    *
-   * @param {SoundCategory} category Category key.
-   * @returns {SoundDefinition[]} Category-filtered sounds.
-   * @throws {Error} This method does not throw under normal operation.
+   * @param {SoundCategory} category カテゴリキー。
+   * @returns {SoundDefinition[]} カテゴリで絞り込んだサウンド一覧。
+   * @throws {Error} 通常運用ではこのメソッドは例外をスローしない。
    * @example
    * ```ts
    * const taps = bank.getByCategory('tapping');
@@ -52,11 +52,11 @@ export class SoundBank {
   }
 
   /**
-   * Returns sounds matching one trigger mode.
+   * 指定トリガーモードに一致するサウンドを返する。
    *
-   * @param {TriggerMode} triggerMode Trigger mode.
-   * @returns {SoundDefinition[]} Trigger-mode filtered sounds.
-   * @throws {Error} This method does not throw under normal operation.
+   * @param {TriggerMode} triggerMode トリガーモード。
+   * @returns {SoundDefinition[]} トリガーモードで絞り込んだサウンド一覧。
+   * @throws {Error} 通常運用ではこのメソッドは例外をスローしない。
    * @example
    * ```ts
    * const dragSounds = bank.getByTriggerMode('drag');
@@ -67,11 +67,11 @@ export class SoundBank {
   }
 
   /**
-   * Finds a sound by its id.
+   * IDでサウンドを検索する。
    *
-   * @param {string} soundId Identifier from the palette.
-   * @returns {SoundDefinition | null} Matching sound or null when not found.
-   * @throws {Error} This method does not throw under normal operation.
+   * @param {string} soundId パレット上の識別子。
+   * @returns {SoundDefinition | null} 一致したサウンド。未検出時はnull。
+   * @throws {Error} 通常運用ではこのメソッドは例外をスローしない。
    * @example
    * ```ts
    * const sound = bank.getById('tap-wood');
@@ -82,11 +82,11 @@ export class SoundBank {
   }
 
   /**
-   * Inserts or replaces one sound definition.
+   * サウンド定義を1件追加または置換する。
    *
-   * @param {SoundDefinition} sound Sound definition to upsert.
-   * @returns {void} This method does not return a value.
-   * @throws {Error} Throws when the id is empty.
+   * @param {SoundDefinition} sound 追加または更新するサウンド定義。
+   * @returns {void} このメソッドは値を返しない。
+   * @throws {Error} IDが空の場合にスローする。
    * @example
    * ```ts
    * bank.upsert(soundDefinition);
@@ -101,11 +101,11 @@ export class SoundBank {
   }
 
   /**
-   * Inserts or replaces many sound definitions in order.
+   * 複数サウンド定義を順序を保って追加または置換する。
    *
-   * @param {SoundDefinition[]} sounds Sound definitions to upsert.
-   * @returns {void} This method does not return a value.
-   * @throws {Error} Throws when duplicate ids exist inside the provided list.
+   * @param {SoundDefinition[]} sounds 追加または更新するサウンド定義一覧。
+   * @returns {void} このメソッドは値を返しない。
+   * @throws {Error} 渡された一覧内に重複IDがある場合にスローする。
    * @example
    * ```ts
    * bank.upsertMany(soundList);
@@ -125,11 +125,11 @@ export class SoundBank {
   }
 
   /**
-   * Removes one sound definition by id.
+   * ID指定でサウンド定義を1件削除する。
    *
-   * @param {string} soundId Sound id to remove.
-   * @returns {boolean} True when the sound existed and was removed.
-   * @throws {Error} This method does not throw under normal operation.
+   * @param {string} soundId 削除対象のサウンドID。
+   * @returns {boolean} 対象サウンドが存在して削除された場合はtrue。
+   * @throws {Error} 通常運用ではこのメソッドは例外をスローしない。
    * @example
    * ```ts
    * const removed = bank.removeById('user-sound-id');

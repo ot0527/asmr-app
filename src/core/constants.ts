@@ -1,12 +1,12 @@
 import type { HeadRegion, SoundCategory, SoundDefinition } from './types';
 
 /**
- * Scale factor converting model-space offsets into audio-space offsets.
+ * モデル空間オフセットを音響空間オフセットへ変換するスケール係数。
  */
 export const AUDIO_SCALE = 1.35;
 
 /**
- * Orbit controls limits tuned for natural head manipulation.
+ * 自然な頭部操作向けに調整したOrbitControl制約。
  */
 export const ORBIT_LIMITS = {
   minPolarAngle: Math.PI / 3,
@@ -16,7 +16,7 @@ export const ORBIT_LIMITS = {
 } as const;
 
 /**
- * User-facing labels for each head region.
+ * 頭部各部位のユーザー向けラベル。
  */
 export const HEAD_REGION_LABEL: Record<HeadRegion, string> = {
   ear_left: '左耳',
@@ -28,7 +28,7 @@ export const HEAD_REGION_LABEL: Record<HeadRegion, string> = {
 };
 
 /**
- * UI label and icon metadata for each sound category.
+ * 各サウンドカテゴリのUIラベルとアイコンメタデータ。
  */
 export const SOUND_CATEGORY_META: Record<
   SoundCategory,
@@ -45,7 +45,7 @@ export const SOUND_CATEGORY_META: Record<
 };
 
 /**
- * Category order used by the sound palette.
+ * サウンドパレットで使用するカテゴリ順。
  */
 export const PALETTE_CATEGORY_ORDER: SoundCategory[] = [
   'whisper',
@@ -58,21 +58,21 @@ export const PALETTE_CATEGORY_ORDER: SoundCategory[] = [
 ];
 
 /**
- * Category list used by ambient controls.
+ * 環境音コントロールで使用するカテゴリ一覧。
  */
 export const AMBIENT_CATEGORY_ORDER: SoundCategory[] = ['ambient'];
 
 /**
- * Default ambient gain for Phase2.
+ * Phase2のデフォルト環境音ゲイン。
  */
 export const DEFAULT_BGM_GAIN = 0.33;
 
 /**
- * Creates one synthesized sound definition with consistent defaults.
+ * 一貫した既定値を持つ合成サウンド定義を1件作成する。
  *
- * @param {Omit<SoundDefinition, 'sourceType' | 'isUserGenerated'>} sound Partial sound definition.
- * @returns {SoundDefinition} Completed synthesized sound definition.
- * @throws {Error} This function does not throw under normal operation.
+ * @param {Omit<SoundDefinition, 'sourceType' | 'isUserGenerated'>} sound 一部項目のみを持つサウンド定義。
+ * @returns {SoundDefinition} 補完済みの合成サウンド定義。
+ * @throws {Error} 通常運用ではこの関数は例外をスローしない。
  * @example
  * ```ts
  * const sound = createSynthSoundDefinition({
@@ -100,7 +100,7 @@ function createSynthSoundDefinition(
 }
 
 /**
- * Phase2 bundled sound palette (30+ sounds).
+ * Phase2同梱サウンドパレット（30種以上）。
  */
 export const SOUND_DEFINITIONS: SoundDefinition[] = [
   createSynthSoundDefinition({

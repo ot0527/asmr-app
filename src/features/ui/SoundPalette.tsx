@@ -3,7 +3,7 @@ import { PALETTE_CATEGORY_ORDER, SOUND_CATEGORY_META } from '../../core/constant
 import type { SoundCategory, SoundDefinition } from '../../core/types';
 
 /**
- * Props for the sound palette component.
+ * サウンドパレットコンポーネントのProps。
  */
 export interface SoundPaletteProps {
   sounds: SoundDefinition[];
@@ -14,12 +14,12 @@ export interface SoundPaletteProps {
 }
 
 /**
- * Filters sounds to those displayed in the interaction palette.
+ * 操作パレットに表示するサウンドへ絞り込みます。
  *
- * @param {SoundDefinition[]} sounds Input sound list.
- * @param {SoundCategory} category Active category tab.
- * @returns {SoundDefinition[]} Category-filtered interaction sounds.
- * @throws {Error} This function does not throw under normal operation.
+ * @param {SoundDefinition[]} sounds 入力のサウンド一覧。
+ * @param {SoundCategory} category 現在選択中のカテゴリタブ。
+ * @returns {SoundDefinition[]} カテゴリで絞り込んだ操作用サウンド一覧。
+ * @throws {Error} 通常運用ではこの関数は例外をスローしない。
  * @example
  * ```ts
  * const visible = toPaletteSounds(sounds, 'tapping');
@@ -30,11 +30,11 @@ function toPaletteSounds(sounds: SoundDefinition[], category: SoundCategory): So
 }
 
 /**
- * Renders the selectable Phase2 sound palette with category tabs.
+ * カテゴリタブ付きの選択可能なPhase2サウンドパレットを描画する。
  *
- * @param {SoundPaletteProps} props Palette data and callbacks.
- * @returns {JSX.Element} Sound palette view.
- * @throws {Error} This component does not throw under normal operation.
+ * @param {SoundPaletteProps} props パレット表示データとコールバック。
+ * @returns {JSX.Element} サウンドパレット表示。
+ * @throws {Error} 通常運用ではこのコンポーネントは例外をスローしない。
  * @example
  * ```tsx
  * <SoundPalette {...props} />
