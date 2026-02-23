@@ -9,7 +9,7 @@ export interface SettingsDrawerProps {
 }
 
 /**
- * Renders a lightweight settings drawer for Phase1.
+ * Renders a lightweight settings drawer for Phase2.
  *
  * @param {SettingsDrawerProps} props Drawer state and close callback.
  * @returns {JSX.Element} Settings drawer view.
@@ -24,11 +24,11 @@ export function SettingsDrawer(props: SettingsDrawerProps): ReactElement {
     <aside className={`settings-drawer ${props.isOpen ? 'is-open' : ''}`} aria-hidden={!props.isOpen}>
       <div className="settings-content">
         <h2>Settings</h2>
-        <p>Phase1では音響と3D操作に集中するため、設定は最小構成です。</p>
+        <p>Phase2では録音・BGM・カテゴリ拡張に対応し、操作設定を段階的に追加しています。</p>
         <ul>
-          <li>モデル上ドラッグ: ASMRトリガー</li>
+          <li>モデル上ドラッグ: 連続ストローク再生</li>
           <li>余白ドラッグ: モデル回転</li>
-          <li>タップ: 単発再生</li>
+          <li>録音/インポート: マイ音源へ追加</li>
         </ul>
         <button
           type="button"

@@ -1,7 +1,13 @@
 import { Canvas } from '@react-three/fiber';
 import { useCallback, useRef, useState, type ReactElement } from 'react';
 import { Quaternion, Vector3, type Group } from 'three';
-import type { AudioPosition, GestureType, HeadRegion, TouchHit } from '../../core/types';
+import type {
+  AudioPosition,
+  GestureMetrics,
+  GestureType,
+  HeadRegion,
+  TouchHit
+} from '../../core/types';
 import { touchToAudioPosition } from '../audio/TriggerMapper';
 import { HeadModel } from './HeadModel';
 import { OrbitControl } from './OrbitControl';
@@ -14,6 +20,7 @@ export interface SceneTriggerPayload {
   region: HeadRegion;
   position: AudioPosition;
   gesture: GestureType;
+  gestureMetrics: GestureMetrics;
 }
 
 /**
@@ -23,6 +30,7 @@ export interface SceneCanvasProps {
   highlightedRegion: HeadRegion | null;
   onRegionHover: (region: HeadRegion) => void;
   onTrigger: (payload: SceneTriggerPayload) => void;
+  onStrokeEnd: () => void;
 }
 
 /**
@@ -31,6 +39,7 @@ export interface SceneCanvasProps {
  * @param {Group} headGroup Root group of the head model.
  * @param {TouchHit} hit Normalized hit object from raycasting.
  * @param {'tap' | 'drag'} gesture Pointer gesture type.
+ * @param {GestureMetrics} gestureMetrics Pointer speed and smoothing metrics.
  * @returns {SceneTriggerPayload} Scene trigger payload.
  * @throws {Error} This function does not throw under normal operation.
  * @example
@@ -41,7 +50,8 @@ export interface SceneCanvasProps {
 function buildSceneTrigger(
   headGroup: Group,
   hit: TouchHit,
-  gesture: 'tap' | 'drag'
+  gesture: 'tap' | 'drag',
+  gestureMetrics: GestureMetrics
 ): SceneTriggerPayload {
   const headCenter = new Vector3();
   const headRotation = new Quaternion();
@@ -52,7 +62,8 @@ function buildSceneTrigger(
   return {
     region: hit.region,
     position: touchToAudioPosition(hit.point, headCenter, headRotation),
-    gesture
+    gesture,
+    gestureMetrics
   };
 }
 
@@ -101,7 +112,7 @@ export function SceneCanvas(props: SceneCanvasProps): ReactElement {
    * ```
    */
   const handleHit = useCallback(
-    (hit: TouchHit, gesture: 'tap' | 'drag'): void => {
+    (hit: TouchHit, gesture: 'tap' | 'drag', gestureMetrics: GestureMetrics): void => {
       const headGroup = headGroupRef.current;
 
       if (headGroup === null) {
@@ -109,7 +120,7 @@ export function SceneCanvas(props: SceneCanvasProps): ReactElement {
       }
 
       props.onRegionHover(hit.region);
-      props.onTrigger(buildSceneTrigger(headGroup, hit, gesture));
+      props.onTrigger(buildSceneTrigger(headGroup, hit, gesture, gestureMetrics));
     },
     [props]
   );
@@ -148,6 +159,7 @@ export function SceneCanvas(props: SceneCanvasProps): ReactElement {
           enabled
           headObject={headObject}
           onHit={handleHit}
+          onGestureEnd={props.onStrokeEnd}
           onModelPointerStateChange={setLockOrbit}
         />
       </Canvas>

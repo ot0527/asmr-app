@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { useThree } from '@react-three/fiber';
 import { Raycaster, Vector2, Vector3, type Object3D } from 'three';
-import type { GestureType, TouchHit } from '../../core/types';
+import type { GestureMetrics, GestureType, TouchHit } from '../../core/types';
 import { mapLocalPointToRegion, mapMeshToRegion } from '../audio/TriggerMapper';
 
 /**
@@ -10,7 +10,8 @@ import { mapLocalPointToRegion, mapMeshToRegion } from '../audio/TriggerMapper';
 export interface TouchHandlerProps {
   enabled: boolean;
   headObject: Object3D | null;
-  onHit: (hit: TouchHit, gesture: GestureType) => void;
+  onHit: (hit: TouchHit, gesture: GestureType, metrics: GestureMetrics) => void;
+  onGestureEnd: () => void;
   onModelPointerStateChange: (isPointerOnModel: boolean) => void;
 }
 
@@ -20,6 +21,47 @@ interface PointerState {
   lastY: number;
   isPointerOnModel: boolean;
   lastEmitTimeMs: number;
+  lastWorldPoint: Vector3 | null;
+}
+
+/**
+ * Clamps a number to a range.
+ *
+ * @param {number} value Value to clamp.
+ * @param {number} min Minimum allowed value.
+ * @param {number} max Maximum allowed value.
+ * @returns {number} Clamped number.
+ * @throws {Error} This function does not throw under normal operation.
+ * @example
+ * ```ts
+ * const clamped = clamp(2.3, 0, 1);
+ * ```
+ */
+function clamp(value: number, min: number, max: number): number {
+  return Math.min(Math.max(value, min), max);
+}
+
+/**
+ * Calculates drag metrics used by stroke playback and smoothing.
+ *
+ * @param {number} movement Pointer movement in pixels.
+ * @param {number} elapsedMs Time elapsed since the previous emit.
+ * @returns {GestureMetrics} Gesture metrics for audio and interpolation.
+ * @throws {Error} This function does not throw under normal operation.
+ * @example
+ * ```ts
+ * const metrics = toGestureMetrics(18, 32);
+ * ```
+ */
+function toGestureMetrics(movement: number, elapsedMs: number): GestureMetrics {
+  const safeElapsedMs = Math.max(elapsedMs, 1);
+  const speedPxPerSecond = movement / (safeElapsedMs / 1000);
+  const speedNormalized = clamp(speedPxPerSecond / 650, 0, 1.6);
+
+  return {
+    speedPxPerSecond,
+    smoothingAlpha: clamp(0.18 + speedNormalized * 0.4, 0.18, 0.78)
+  };
 }
 
 /**
@@ -91,7 +133,8 @@ export function TouchHandler(props: TouchHandlerProps): null {
     lastX: 0,
     lastY: 0,
     isPointerOnModel: false,
-    lastEmitTimeMs: 0
+    lastEmitTimeMs: 0,
+    lastWorldPoint: null
   });
 
   useEffect(() => {
@@ -151,10 +194,11 @@ export function TouchHandler(props: TouchHandlerProps): null {
       pointerRef.current.lastY = event.clientY;
       pointerRef.current.isPointerOnModel = true;
       pointerRef.current.lastEmitTimeMs = performance.now();
+      pointerRef.current.lastWorldPoint = hit.point.clone();
 
       canvasElement.setPointerCapture(event.pointerId);
       props.onModelPointerStateChange(true);
-      props.onHit(hit, 'tap');
+      props.onHit(hit, 'tap', { speedPxPerSecond: 0, smoothingAlpha: 1 });
       event.preventDefault();
     };
 
@@ -193,10 +237,22 @@ export function TouchHandler(props: TouchHandlerProps): null {
       const hit = pickHit(event.clientX, event.clientY);
 
       if (hit !== null) {
+        const metrics = toGestureMetrics(movement, elapsedMs);
+        const lastPoint = pointerRef.current.lastWorldPoint ?? hit.point;
+        const smoothedPoint = lastPoint.clone().lerp(hit.point, metrics.smoothingAlpha);
+
         pointerRef.current.lastX = event.clientX;
         pointerRef.current.lastY = event.clientY;
         pointerRef.current.lastEmitTimeMs = nowMs;
-        props.onHit(hit, 'drag');
+        pointerRef.current.lastWorldPoint = smoothedPoint.clone();
+        props.onHit(
+          {
+            ...hit,
+            point: smoothedPoint
+          },
+          'drag',
+          metrics
+        );
         event.preventDefault();
       }
     };
@@ -224,10 +280,13 @@ export function TouchHandler(props: TouchHandlerProps): null {
       pointerRef.current.pointerId = null;
       pointerRef.current.isPointerOnModel = false;
       pointerRef.current.lastEmitTimeMs = 0;
+      pointerRef.current.lastWorldPoint = null;
 
       if (canvasElement.hasPointerCapture(event.pointerId)) {
         canvasElement.releasePointerCapture(event.pointerId);
       }
+
+      props.onGestureEnd();
     };
 
     canvasElement.addEventListener('pointerdown', onPointerDown, { passive: false });
