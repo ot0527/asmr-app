@@ -85,7 +85,8 @@ export function touchToAudioPosition(
   const relativeLocal = relativeWorld.applyQuaternion(inverseHeadRotation);
 
   return {
-    x: relativeLocal.x * AUDIO_SCALE,
+    // The 3D stage is presented as a face-to-face view, so we invert X to match user-perceived left/right.
+    x: -relativeLocal.x * AUDIO_SCALE,
     y: relativeLocal.y * AUDIO_SCALE,
     z: relativeLocal.z * AUDIO_SCALE
   };
